@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -oE \"Shop top brands.{0,2000}\")",
+      "Bash(curl -s -o /dev/null -w \"chocolate -> %{http_code}\\\\n\" \"http://localhost:3000/hero/hottest%20deals%20chocolate%20banner.jpeg\")",
+      "Bash(curl -s -o /dev/null -w \"crisps -> %{http_code}\\\\n\" \"http://localhost:3000/hero/hottest%20deals%20crisps%20banner.jpeg\")",
+      "Bash(curl -s -o /dev/null -w \"drinks -> %{http_code}\\\\n\" \"http://localhost:3000/hero/hottest%20deals%20drinks%20banner.jpeg\")",
+      "Bash(curl -s -o /dev/null -w \"sweets -> %{http_code}\\\\n\" \"http://localhost:3000/hero/hottest%20deals%20sweets%20banner.jpeg\")",
+      "Bash(tasklist //FI \"IMAGENAME eq node.exe\")",
+      "Read(//c/Users/kaire/AppData/Local/Temp/claude/**)",
+      "Bash(grep -iE \"\\\\.\\(png|jpe?g|webp\\)$\")",
+      "Read(//c/Users/kaire/AppData/Local/Temp/**)",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"logo file: %{http_code}\\\\n\" http://localhost:3000/logo.png)",
+      "Bash(python -c \"import PIL; print\\(PIL.__version__\\)\")",
+      "Bash(magick -version)",
+      "Bash(npm ls *)",
+      "Bash(node \"C:\\\\Users\\\\kaire\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-kaire-projects-hottest-deals-uk\\\\f11b3e6f-026e-49fd-abb2-c247299829a9\\\\scratchpad\\\\make-transparent.js\" public/logo.png public/logo-transparent-test.png)",
+      "Bash(node scripts/make-transparent.js public/logo.png public/logo-transparent-test.png)",
+      "Bash(node -e ' *)",
+      "Bash(cp public/logo-transparent-test.png public/logo.png)",
+      "Bash(rm public/logo-transparent-test.png public/logo-onred-test.png scripts/make-transparent.js)",
+      "Bash(rmdir scripts *)",
+      "Bash(curl -s -o /dev/null -w \"logo: %{http_code}\\\\n\" http://localhost:3000/logo.png)",
+      "Bash(curl -s -D - -o /tmp_optimized_logo.png \"http://localhost:3000/_next/image?url=%2Flogo.png&w=1920&q=75\")",
+      "Bash(curl -s -o optimized-logo-check.png \"http://localhost:3000/_next/image?url=%2Flogo.png&w=1920&q=75\")"
+    ]
+  }
+}
