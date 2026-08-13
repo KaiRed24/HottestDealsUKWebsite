@@ -1,50 +1,57 @@
-import Image from "next/image";
 import Link from "next/link";
 import StockBadge from "@/components/StockBadge";
+import ProductImageFrame from "@/components/ProductImageFrame";
+import AddToBasketButton from "@/components/AddToBasketButton";
 import type { Product } from "@/lib/products";
+
+// Interim origin label derived from the existing region field, pending the
+// Section 7 schema addition + backfill of real per-country origin data.
+const ORIGIN_LABEL: Record<NonNullable<Product["region"]>, string> = {
+  usa: "USA",
+  asia: "ASIA",
+  europe: "EUROPE",
+};
 
 export default function ProductCard({ product }: { product: Product }) {
   const soldOut = product.stock_quantity === 0;
+  const origin = product.region ? ORIGIN_LABEL[product.region] : null;
 
   return (
-    <Link
-      href={`/product/${product.sku}`}
-      className={`group flex flex-col h-full rounded-[var(--radius)] border border-grey-line bg-white overflow-hidden transition-all duration-200 ease-out hover:border-navy hover:-translate-y-0.5 ${
+    <div
+      className={`group flex flex-col h-full rounded-[var(--radius-lg)] border border-line bg-surface overflow-hidden transition-all duration-200 ease-out hover:border-ink/30 hover:-translate-y-0.5 hover:shadow-[var(--shadow-hover)] ${
         soldOut ? "opacity-60" : ""
       }`}
     >
-      <div className="relative aspect-square bg-blue-tint p-5">
-        <Image
-          src={product.image_url as string}
-          alt={product.name}
-          fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          className="object-contain"
-        />
-        {soldOut || product.stock_quantity <= 5 ? (
-          <div className="absolute top-3 left-3">
-            <StockBadge stock={product.stock_quantity} />
-          </div>
-        ) : null}
-      </div>
-
-      <div className="flex flex-1 flex-col p-4">
-        <p className="text-[15px] leading-snug text-text min-h-[3.9em] line-clamp-3">
-          {product.name}
-        </p>
-        <div className="mt-auto pt-3 flex items-center justify-between gap-2">
-          <span className="font-semibold text-navy text-lg">
-            £{product.price.toFixed(2)}
-          </span>
-          <span
-            className={`text-sm ${
-              soldOut ? "text-muted" : "text-blue group-hover:text-navy transition-colors"
-            }`}
-          >
-            {soldOut ? "Sold out" : "View →"}
-          </span>
+      <Link href={`/product/${product.sku}`} className="contents">
+        <div className="relative overflow-hidden">
+          <ProductImageFrame src={product.image_url as string} alt={product.name} />
+          {soldOut || product.stock_quantity <= 5 ? (
+            <div className="absolute top-3 left-3">
+              <StockBadge stock={product.stock_quantity} />
+            </div>
+          ) : null}
         </div>
+
+        <div className="flex flex-1 flex-col p-4 pb-0">
+          {origin && <span className="origin-stamp w-fit">{origin}</span>}
+          <p className="mt-2 text-[0.9375rem] font-medium leading-snug text-text min-h-[2.6em] line-clamp-2">
+            {product.name}
+          </p>
+        </div>
+      </Link>
+
+      <div className="mt-auto p-4 pt-3 flex items-center justify-between gap-2">
+        <span
+          className="font-display font-bold text-ink"
+          style={{ fontSize: "var(--text-price)", fontVariantNumeric: "tabular-nums" }}
+        >
+          £{product.price.toFixed(2)}
+        </span>
+        <AddToBasketButton
+          product={product}
+          className="!px-4 !py-2 !min-h-9 text-sm shrink-0"
+        />
       </div>
-    </Link>
+    </div>
   );
 }

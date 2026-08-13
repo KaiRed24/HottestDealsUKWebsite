@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import AnnouncementBar from "@/components/AnnouncementBar";
@@ -10,10 +11,27 @@ import { hasLogo, getLogoVersion } from "@/lib/assets";
 import { getSocialIconPaths } from "@/lib/social-availability";
 import { createClient } from "@/lib/supabase/server";
 
-const inter = Inter({
-  variable: "--font-inter",
+const clashDisplay = localFont({
+  variable: "--font-clash",
+  src: [
+    { path: "./fonts/ClashDisplay-Semibold.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/ClashDisplay-Bold.woff2", weight: "700", style: "normal" },
+  ],
+});
+
+const switzer = localFont({
+  variable: "--font-switzer",
+  src: [
+    { path: "./fonts/Switzer-Regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/Switzer-Medium.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/Switzer-Semibold.woff2", weight: "600", style: "normal" },
+  ],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["500"],
 });
 
 export const metadata: Metadata = {
@@ -41,7 +59,10 @@ export default async function RootLayout({
   } = await supabase.auth.getUser();
 
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${clashDisplay.variable} ${switzer.variable} ${jetbrainsMono.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col font-sans">
         <CartProvider>
           <AnnouncementBar />
