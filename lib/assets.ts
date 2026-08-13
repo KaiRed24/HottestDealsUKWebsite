@@ -42,3 +42,16 @@ export function getFeaturedCarouselImage(sku: string): string | null {
     .find((f) => /\.(jpe?g|png|webp)$/i.test(f) && f.replace(/\.[^.]+$/, "") === sku);
   return match ? `/featured/${match}` : null;
 }
+
+// Full-bleed category banner for the homepage category carousel, looked up
+// by category value (public/category-carousel/<value>.<ext>) — same
+// by-key lookup pattern as getFeaturedCarouselImage, for the same reason:
+// a slide can never end up labelled with the wrong image.
+export function getCategoryCarouselImage(value: string): string | null {
+  const dir = path.join(process.cwd(), "public", "category-carousel");
+  if (!fs.existsSync(dir)) return null;
+  const match = fs
+    .readdirSync(dir)
+    .find((f) => /\.(jpe?g|png|webp)$/i.test(f) && f.replace(/\.[^.]+$/, "") === value);
+  return match ? `/category-carousel/${match}` : null;
+}

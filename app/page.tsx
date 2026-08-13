@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { getProducts, getFeatured } from "@/lib/products";
 import { computeTopBrands } from "@/lib/brands";
-import { getHeroBanners, getFeaturedCarouselImage } from "@/lib/assets";
+import { getHeroBanners, getCategoryCarouselImage } from "@/lib/assets";
 import { getSocialIconPaths } from "@/lib/social-availability";
 import { getBrandLogoPath } from "@/lib/brands-availability";
 import ProductCard from "@/components/ProductCard";
 import TopBrands from "@/components/TopBrands";
 import SocialLink from "@/components/SocialLink";
-import FeaturedShowcase from "@/components/FeaturedShowcase";
+import CategoryCarousel from "@/components/CategoryCarousel";
 import HeroSlideshow from "@/components/HeroSlideshow";
 import Reveal from "@/components/Reveal";
 
@@ -21,11 +21,20 @@ const categoryTiles = [
   { value: "bundles", label: "Bundles" },
 ];
 
+// The Featured Picks carousel — only shown once its image is uploaded to
+// public/category-carousel/<value>.jpg, so a half-configured slide never
+// goes live with a broken image.
+const featuredCategorySlides = [
+  { value: "candy", label: "Candy" },
+  { value: "chocolate", label: "Chocolate" },
+  { value: "drinks", label: "Drinks" },
+  { value: "snacks", label: "Crisps & Snacks" },
+];
+
 export default async function Home() {
-  const [allProducts, bundles, featured] = await Promise.all([
+  const [allProducts, bundles] = await Promise.all([
     getProducts(),
     getProducts({ category: "bundles" }),
-    getFeatured(),
   ]);
 
   const topBrands = computeTopBrands(allProducts).map((brand) => ({
@@ -34,9 +43,9 @@ export default async function Home() {
   }));
   const socialIcons = getSocialIconPaths();
   const heroBanners = getHeroBanners();
-  // Derived directly from `featured` itself (same array, same order) so a
-  // slide's custom graphic can never drift out of sync with its product.
-  const featuredImages = featured.map((p) => getFeaturedCarouselImage(p.sku));
+  const categorySlides = featuredCategorySlides
+    .map((c) => ({ ...c, image: getCategoryCarouselImage(c.value) }))
+    .filter((c): c is { value: string; label: string; image: string } => c.image !== null);
 
   return (
     <div className="flex flex-col">
@@ -91,8 +100,9 @@ export default async function Home() {
         </section>
       )}
 
-      {/* Featured showcase */}
-      <FeaturedShowcase products={featured} images={featuredImages} />
+      {/* Featured picks — full-bleed category carousel, matching the Hero's
+          treatment. Waiting on real photos, see chat for upload status. */}
+      <CategoryCarousel slides={categorySlides} />
 
       {/* Shop by category */}
       <section className="mx-auto w-full max-w-[1280px] px-6 py-24 sm:py-32 border-b border-grey-line">
