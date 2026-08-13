@@ -16,8 +16,8 @@ export default function Logo({
         <Image
           src={logoVersion ? `/logo.png?v=${logoVersion}` : "/logo.png"}
           alt="Hottest Deals UK"
-          width={1536}
-          height={1024}
+          width={1610}
+          height={1027}
           priority
           className={`w-auto ${className}`}
         />

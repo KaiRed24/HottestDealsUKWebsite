@@ -29,3 +29,16 @@ export function getHeroBanners(): string[] {
     .sort()
     .map((f) => `/hero/${f}`);
 }
+
+// Optional bigger marketing-style graphic for the "Featured picks" carousel,
+// looked up by SKU (public/featured/<sku>.<ext>) rather than by folder
+// position — deliberately, so a product's slide can never end up paired
+// with the wrong photo. Falls back to the product's own photo when absent.
+export function getFeaturedCarouselImage(sku: string): string | null {
+  const dir = path.join(process.cwd(), "public", "featured");
+  if (!fs.existsSync(dir)) return null;
+  const match = fs
+    .readdirSync(dir)
+    .find((f) => /\.(jpe?g|png|webp)$/i.test(f) && f.replace(/\.[^.]+$/, "") === sku);
+  return match ? `/featured/${match}` : null;
+}

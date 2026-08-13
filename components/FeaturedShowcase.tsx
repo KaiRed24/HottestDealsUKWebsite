@@ -7,7 +7,16 @@ import type { Product } from "@/lib/products";
 
 const AUTOPLAY_MS = 5000;
 
-export default function FeaturedShowcase({ products }: { products: Product[] }) {
+export default function FeaturedShowcase({
+  products,
+  images = [],
+}: {
+  products: Product[];
+  // Must be the same length/order as `products` — index i is the custom
+  // graphic for products[i], derived by the caller via product.sku so it
+  // can never be paired with the wrong item.
+  images?: (string | null)[];
+}) {
   const [index, setIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
@@ -43,7 +52,7 @@ export default function FeaturedShowcase({ products }: { products: Product[] }) 
   if (products.length === 0) return null;
 
   const product = products[index];
-  const imageSrc = product.image_url as string;
+  const imageSrc = images[index] ?? (product.image_url as string);
 
   return (
     <section
@@ -66,29 +75,30 @@ export default function FeaturedShowcase({ products }: { products: Product[] }) 
         </Link>
       </div>
 
-      <div className="mx-auto max-w-[1280px] rounded-[var(--radius)] border border-grey-line overflow-hidden grid sm:grid-cols-2 bg-white">
-        <div className="relative aspect-[4/3] sm:aspect-auto bg-blue-tint p-10 sm:p-14 lg:p-20">
-          <Image
-            src={imageSrc}
-            alt={product.name}
-            fill
-            sizes="(max-width: 640px) 100vw, 50vw"
-            className="object-contain"
-            priority={index === 0}
-          />
-        </div>
-
-        <div className="flex flex-col justify-center p-8 sm:p-14 lg:p-20">
-          <p className="text-xs uppercase tracking-wide text-muted">
-            Featured
-          </p>
-          <h3 className="mt-4 text-h3 sm:text-display font-semibold tracking-[-0.02em] text-text leading-snug">
-            {product.name}
-          </h3>
-          <p className="mt-4 text-2xl font-semibold text-navy">
-            £{product.price.toFixed(2)}
-          </p>
-          <Link href={`/product/${product.sku}`} className="btn-primary mt-8 w-fit px-8 text-lg">
+      {/* Every slide is the exact same box regardless of the source image's
+          own proportions — object-cover crops to fill instead of shrinking
+          to fit, so nothing ever looks a different size or leaves gaps. */}
+      <div className="mx-auto max-w-[1280px] relative aspect-[4/3] sm:aspect-[16/7] rounded-[var(--radius)] overflow-hidden bg-blue-tint">
+        <Image
+          src={imageSrc}
+          alt={product.name}
+          fill
+          sizes="100vw"
+          className="object-cover"
+          priority={index === 0}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10 flex items-end justify-between gap-4">
+          <div className="min-w-0">
+            <p className="text-xs uppercase tracking-wide text-white/70">Featured</p>
+            <p className="mt-1 text-xl sm:text-2xl font-display font-bold text-white">
+              £{product.price.toFixed(2)}
+            </p>
+          </div>
+          <Link
+            href={`/product/${product.sku}`}
+            className="btn-primary bg-white text-navy hover:bg-blue-tint shrink-0 px-8"
+          >
             Shop now
           </Link>
         </div>

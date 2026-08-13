@@ -89,8 +89,8 @@ export default function Nav({
         <Logo hasLogo={hasLogo} logoVersion={logoVersion} className="h-20 sm:h-24" />
 
         <div className="hidden lg:flex items-center gap-3">
-          <SocialLink platform="tiktok" iconPath={tiktokIconPath} />
-          <SocialLink platform="whatnot" iconPath={whatnotIconPath} />
+          <SocialLink platform="tiktok" iconPath={tiktokIconPath} tone="solid-navy" />
+          <SocialLink platform="whatnot" iconPath={whatnotIconPath} tone="solid-navy" />
 
           <span className="w-px h-6 bg-grey-line mx-1" aria-hidden />
 
@@ -187,11 +187,13 @@ export default function Nav({
             <SocialLink
               platform="tiktok"
               iconPath={tiktokIconPath}
+              tone="solid-navy"
               className="flex-1"
             />
             <SocialLink
               platform="whatnot"
               iconPath={whatnotIconPath}
+              tone="solid-navy"
               className="flex-1"
             />
           </div>

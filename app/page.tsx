@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getProducts, getFeatured } from "@/lib/products";
 import { computeTopBrands } from "@/lib/brands";
-import { getHeroBanners } from "@/lib/assets";
+import { getHeroBanners, getFeaturedCarouselImage } from "@/lib/assets";
 import { getSocialIconPaths } from "@/lib/social-availability";
 import { getBrandLogoPath } from "@/lib/brands-availability";
 import ProductCard from "@/components/ProductCard";
@@ -34,6 +34,9 @@ export default async function Home() {
   }));
   const socialIcons = getSocialIconPaths();
   const heroBanners = getHeroBanners();
+  // Derived directly from `featured` itself (same array, same order) so a
+  // slide's custom graphic can never drift out of sync with its product.
+  const featuredImages = featured.map((p) => getFeaturedCarouselImage(p.sku));
 
   return (
     <div className="flex flex-col">
@@ -89,7 +92,7 @@ export default async function Home() {
       )}
 
       {/* Featured showcase */}
-      <FeaturedShowcase products={featured} />
+      <FeaturedShowcase products={featured} images={featuredImages} />
 
       {/* Shop by category */}
       <section className="mx-auto w-full max-w-[1280px] px-6 py-24 sm:py-32 border-b border-grey-line">
@@ -102,7 +105,7 @@ export default async function Home() {
               <Link
                 key={tile.value}
                 href={`/shop?category=${tile.value}`}
-                className="rounded-[var(--radius)] border border-grey-line bg-white min-h-28 p-5 flex items-end font-medium text-text transition-all duration-200 ease-out hover:border-navy hover:-translate-y-0.5"
+                className="rounded-[var(--radius)] bg-navy min-h-28 p-5 flex items-end font-medium text-white transition-all duration-200 ease-out hover:bg-ink hover:-translate-y-0.5"
               >
                 {tile.label}
               </Link>
@@ -155,13 +158,13 @@ export default async function Home() {
               platform="tiktok"
               iconPath={socialIcons.tiktok}
               showFollowPrefix
-              tone="on-ink"
+              tone="solid-white"
             />
             <SocialLink
               platform="whatnot"
               iconPath={socialIcons.whatnot}
               showFollowPrefix
-              tone="on-ink"
+              tone="solid-white"
             />
           </div>
         </Reveal>

@@ -10,16 +10,19 @@ export default function SocialLink({
 }: {
   platform: SocialPlatform;
   iconPath: string | null;
-  tone?: "on-cream" | "on-ink";
+  tone?: "on-cream" | "on-ink" | "solid-blue" | "solid-navy" | "solid-white";
   showFollowPrefix?: boolean;
   className?: string;
 }) {
   const { name, href, label } = SOCIAL_LINKS[platform];
 
-  const toneClasses =
-    tone === "on-ink"
-      ? "text-white border border-white/30 hover:bg-white/10"
-      : "text-navy border border-grey-line hover:border-navy";
+  const toneClasses = {
+    "on-cream": "text-navy border border-grey-line hover:border-navy",
+    "on-ink": "text-white border border-white/30 hover:bg-white/10",
+    "solid-blue": "text-white bg-blue border border-blue hover:bg-[var(--blue-ink)]",
+    "solid-navy": "text-white bg-navy border border-navy hover:bg-ink",
+    "solid-white": "text-navy bg-white border border-white hover:bg-blue-tint",
+  }[tone];
 
   return (
     <a
