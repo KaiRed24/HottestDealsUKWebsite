@@ -8,12 +8,12 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-12">
-      <h1 className="font-display text-3xl sm:text-4xl font-bold text-ink">
+    <div className="mx-auto w-full max-w-3xl px-6 py-16">
+      <h1 className="text-h2 sm:text-display font-semibold tracking-[-0.02em] text-text">
         About Hottest Deals UK
       </h1>
 
-      <div className="mt-6 space-y-5 text-ink/80 leading-relaxed">
+      <div className="mt-6 space-y-5 text-muted leading-relaxed">
         <p>
           We&apos;re Hottest Deals UK — the home of imported confectionery
           &amp; drinks. We hunt down the American candy, Asian treats and
@@ -33,7 +33,7 @@ export default function AboutPage() {
             href="https://www.tiktok.com/@hottestdealsuk"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-bold text-red hover:underline"
+            className="font-medium text-blue hover:text-navy transition-colors"
           >
             @hottestdealsuk
           </a>{" "}

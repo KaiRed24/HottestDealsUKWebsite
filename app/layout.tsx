@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Baloo_2, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import AnnouncementBar from "@/components/AnnouncementBar";
@@ -10,15 +10,10 @@ import { hasLogo, getLogoVersion } from "@/lib/assets";
 import { getSocialIconPaths } from "@/lib/social-availability";
 import { createClient } from "@/lib/supabase/server";
 
-const baloo2 = Baloo_2({
-  variable: "--font-baloo",
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
-});
-
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -46,10 +41,7 @@ export default async function RootLayout({
   } = await supabase.auth.getUser();
 
   return (
-    <html
-      lang="en"
-      className={`${baloo2.variable} ${inter.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans">
         <CartProvider>
           <AnnouncementBar />

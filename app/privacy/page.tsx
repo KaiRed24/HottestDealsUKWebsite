@@ -7,15 +7,15 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-12">
-      <h1 className="font-display text-3xl sm:text-4xl font-bold text-ink">
+    <div className="mx-auto w-full max-w-3xl px-6 py-16">
+      <h1 className="text-h2 sm:text-display font-semibold tracking-[-0.02em] text-text">
         Privacy Policy
       </h1>
-      <p className="mt-2 text-sm text-ink/60">Last updated: 28 July 2026</p>
+      <p className="mt-2 text-sm text-muted">Last updated: 28 July 2026</p>
 
-      <div className="mt-6 space-y-6 text-ink/80 leading-relaxed">
+      <div className="mt-6 space-y-6 text-muted leading-relaxed">
         <section>
-          <h2 className="font-display text-xl text-ink mb-2">Who we are</h2>
+          <h2 className="text-h3 font-semibold text-text mb-2">Who we are</h2>
           <p>
             Hottest Deals UK is a UK-based importer and retailer of American
             candy, sodas and international confectionery. This website is
@@ -26,7 +26,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl text-ink mb-2">
+          <h2 className="text-h3 font-semibold text-text mb-2">
             What we collect
           </h2>
           <p>
@@ -38,7 +38,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl text-ink mb-2">
+          <h2 className="text-h3 font-semibold text-text mb-2">
             Purchases via eBay, TikTok or Whatnot
           </h2>
           <p>
@@ -51,14 +51,14 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl text-ink mb-2">Your rights</h2>
+          <h2 className="text-h3 font-semibold text-text mb-2">Your rights</h2>
           <p>
             Under UK GDPR, you have the right to access, correct, or request
             deletion of any personal data we hold about you. To make a
             request, email{" "}
             <a
               href="mailto:hello@hottestdealsuk.co.uk"
-              className="font-bold text-red hover:underline"
+              className="font-medium text-blue hover:text-navy transition-colors"
             >
               hello@hottestdealsuk.co.uk
             </a>
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl text-ink mb-2">Changes</h2>
+          <h2 className="text-h3 font-semibold text-text mb-2">Changes</h2>
           <p>
             We may update this policy as the site grows. Any changes will be
             posted on this page.

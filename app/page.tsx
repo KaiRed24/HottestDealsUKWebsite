@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getProducts, getFeatured } from "@/lib/products";
 import { computeTopBrands } from "@/lib/brands";
-import { getHeroBanners, getFeaturedImages } from "@/lib/assets";
+import { getHeroBanners } from "@/lib/assets";
 import { getSocialIconPaths } from "@/lib/social-availability";
 import { getBrandLogoPath } from "@/lib/brands-availability";
 import ProductCard from "@/components/ProductCard";
@@ -9,15 +9,16 @@ import TopBrands from "@/components/TopBrands";
 import SocialLink from "@/components/SocialLink";
 import FeaturedShowcase from "@/components/FeaturedShowcase";
 import HeroSlideshow from "@/components/HeroSlideshow";
+import Reveal from "@/components/Reveal";
 
 export const revalidate = 60;
 
 const categoryTiles = [
-  { value: "candy", label: "Candy", tone: "bg-red text-cream" },
-  { value: "chocolate", label: "Chocolate", tone: "bg-red-deep text-cream" },
-  { value: "drinks", label: "Drinks", tone: "bg-gold text-gold-ink" },
-  { value: "snacks", label: "Crisps & Snacks", tone: "bg-paper text-ink ring-1 ring-ink/15" },
-  { value: "bundles", label: "Bundles", tone: "bg-paper text-ink ring-1 ring-ink/15" },
+  { value: "candy", label: "Candy" },
+  { value: "chocolate", label: "Chocolate" },
+  { value: "drinks", label: "Drinks" },
+  { value: "snacks", label: "Crisps & Snacks" },
+  { value: "bundles", label: "Bundles" },
 ];
 
 export default async function Home() {
@@ -33,39 +34,38 @@ export default async function Home() {
   }));
   const socialIcons = getSocialIconPaths();
   const heroBanners = getHeroBanners();
-  const featuredImages = getFeaturedImages();
 
   return (
     <div className="flex flex-col">
       {/* Hero */}
-      <section className="relative bg-red overflow-hidden">
+      <section className="relative overflow-hidden">
         <HeroSlideshow images={heroBanners} />
-        <div className="relative z-10 mx-auto max-w-6xl px-4 py-16 sm:py-24 text-center flex flex-col items-center">
-          <h1 className="font-display text-4xl sm:text-6xl font-extrabold leading-tight text-white max-w-3xl [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000,0_2px_16px_rgba(0,0,0,0.35)]">
+        {/* Navy overlay gradient — darkens the photo so clean white type
+            never needs a stroke or shadow to stay readable. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/55 to-navy/20 pointer-events-none" />
+        <div className="relative z-10 mx-auto max-w-[1280px] px-6 py-24 sm:py-32 flex flex-col items-start">
+          <h1 className="text-display font-semibold leading-[1.1] tracking-[-0.03em] text-white max-w-2xl">
             Imported candy, sodas &amp; sweets you can&apos;t find on the high
             street.
           </h1>
-          <p className="mt-5 text-lg sm:text-xl text-white/90 max-w-2xl [text-shadow:-1px_-1px_0_#000,1px_-1px_0_#000,-1px_1px_0_#000,1px_1px_0_#000]">
+          <p className="mt-6 text-body leading-relaxed text-white/85 max-w-xl">
             American candy, Asian treats and European chocolate — shipped
             fast across the UK.
           </p>
-          <div className="mt-9 flex flex-col sm:flex-row gap-3">
-            <Link
-              href="/shop"
-              className="rounded-full bg-white text-red font-semibold px-8 py-3.5 min-h-11 hover:bg-gold hover:text-gold-ink transition-colors"
-            >
+          <div className="mt-10 flex flex-col sm:flex-row gap-3">
+            <Link href="/shop" className="btn-primary bg-white text-navy hover:bg-blue-tint px-8">
               Shop now
             </Link>
             <a
               href="https://www.tiktok.com/@hottestdealsuk"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-white text-red font-semibold px-8 py-3.5 min-h-11 hover:bg-gold hover:text-gold-ink transition-colors"
+              className="btn-secondary border-white text-white bg-transparent hover:bg-white/10 px-8"
             >
               Follow @hottestdealsuk
             </a>
           </div>
-          <p className="mt-10 text-xs font-semibold uppercase tracking-wide text-white/70 [text-shadow:-1px_-1px_0_#000,1px_-1px_0_#000,-1px_1px_0_#000,1px_1px_0_#000]">
+          <p className="mt-12 text-small text-white/60">
             Fast UK delivery &nbsp;·&nbsp; 36,000+ TikTok followers &nbsp;·&nbsp; Genuine imported stock
           </p>
         </div>
@@ -73,84 +73,98 @@ export default async function Home() {
 
       {/* Top brands */}
       {topBrands.length > 0 && (
-        <section className="w-full px-4 sm:px-6 py-14">
-          <div className="mx-auto max-w-6xl flex items-end justify-between mb-5">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-ink">
+        <section className="w-full px-6 py-24 sm:py-32 border-b border-grey-line">
+          <Reveal className="mx-auto max-w-[1280px] flex items-end justify-between mb-10">
+            <h2 className="text-h2 font-semibold tracking-[-0.02em] text-text">
               Shop top brands
             </h2>
-            <Link href="/shop" className="font-semibold text-red hover:underline">
+            <Link href="/shop" className="text-sm text-blue hover:text-navy transition-colors">
               Shop all
             </Link>
-          </div>
-          <TopBrands brands={topBrands} />
+          </Reveal>
+          <Reveal className="mx-auto max-w-[1280px]">
+            <TopBrands brands={topBrands} />
+          </Reveal>
         </section>
       )}
 
       {/* Featured showcase */}
-      <FeaturedShowcase products={featured} images={featuredImages} />
+      <FeaturedShowcase products={featured} />
 
       {/* Shop by category */}
-      <section className="mx-auto w-full max-w-6xl px-4 py-10">
-        <h2 className="font-display text-2xl sm:text-3xl font-bold text-ink mb-5">
-          Shop by category
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-          {categoryTiles.map((tile) => (
-            <Link
-              key={tile.value}
-              href={`/shop?category=${tile.value}`}
-              className={`${tile.tone} rounded-brand min-h-24 p-5 flex items-end font-display font-bold text-lg transition-opacity hover:opacity-90`}
-            >
-              {tile.label}
-            </Link>
-          ))}
-        </div>
+      <section className="mx-auto w-full max-w-[1280px] px-6 py-24 sm:py-32 border-b border-grey-line">
+        <Reveal>
+          <h2 className="text-h2 font-semibold tracking-[-0.02em] text-text mb-10">
+            Shop by category
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {categoryTiles.map((tile) => (
+              <Link
+                key={tile.value}
+                href={`/shop?category=${tile.value}`}
+                className="rounded-[var(--radius)] border border-grey-line bg-white min-h-28 p-5 flex items-end font-medium text-text transition-all duration-200 ease-out hover:border-navy hover:-translate-y-0.5"
+              >
+                {tile.label}
+              </Link>
+            ))}
+          </div>
+        </Reveal>
       </section>
 
       {/* Bundles & mystery boxes */}
       {bundles.length > 0 && (
-        <section className="bg-gold/15">
-          <div className="mx-auto w-full max-w-6xl px-4 py-14">
-            <div className="flex items-end justify-between mb-5">
+        <section className="bg-blue-tint">
+          <div className="mx-auto w-full max-w-[1280px] px-6 py-24 sm:py-32">
+            <Reveal className="flex items-end justify-between mb-10">
               <div>
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-ink">
+                <h2 className="text-h2 font-semibold tracking-[-0.02em] text-text">
                   Bundles &amp; mystery boxes
                 </h2>
-                <p className="mt-1 text-ink/60">
+                <p className="mt-2 text-muted">
                   More for less — our biggest value picks.
                 </p>
               </div>
               <Link
                 href="/shop?category=bundles"
-                className="font-semibold text-red hover:underline"
+                className="text-sm text-blue hover:text-navy transition-colors shrink-0"
               >
                 Shop all
               </Link>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+            </Reveal>
+            <Reveal className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {bundles.slice(0, 8).map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
-            </div>
+            </Reveal>
           </div>
         </section>
       )}
 
       {/* Follow us */}
-      <section className="bg-gold">
-        <div className="mx-auto w-full max-w-6xl px-4 py-16 text-center">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-gold-ink">
+      <section className="bg-navy">
+        <Reveal className="mx-auto w-full max-w-[1280px] px-6 py-24 sm:py-32 text-center">
+          <h2 className="text-h2 font-semibold tracking-[-0.02em] text-white">
             36,000+ people follow us for restocks and drops
           </h2>
-          <p className="mt-2 text-gold-ink/80">
+          <p className="mt-3 text-white/70">
             TikTok for unboxings and new arrivals. Whatnot for live auctions
             and drops.
           </p>
-          <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <SocialLink platform="tiktok" iconPath={socialIcons.tiktok} showFollowPrefix />
-            <SocialLink platform="whatnot" iconPath={socialIcons.whatnot} showFollowPrefix />
+          <div className="mt-9 flex flex-wrap justify-center gap-3">
+            <SocialLink
+              platform="tiktok"
+              iconPath={socialIcons.tiktok}
+              showFollowPrefix
+              tone="on-ink"
+            />
+            <SocialLink
+              platform="whatnot"
+              iconPath={socialIcons.whatnot}
+              showFollowPrefix
+              tone="on-ink"
+            />
           </div>
-        </div>
+        </Reveal>
       </section>
     </div>
   );

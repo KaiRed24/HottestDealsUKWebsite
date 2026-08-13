@@ -9,13 +9,10 @@ export default function BasketPage() {
 
   if (items.length === 0) {
     return (
-      <div className="mx-auto w-full max-w-2xl px-4 py-16 text-center">
-        <h1 className="font-display text-3xl font-bold text-ink">Your basket</h1>
-        <p className="mt-3 text-ink/70">Your basket is empty.</p>
-        <Link
-          href="/shop"
-          className="mt-8 inline-block rounded-full bg-red text-white font-semibold px-6 py-3.5 min-h-11 hover:bg-red-deep transition-colors"
-        >
+      <div className="mx-auto w-full max-w-2xl px-6 py-24 text-center">
+        <h1 className="text-h2 font-semibold tracking-[-0.02em] text-text">Your basket</h1>
+        <p className="mt-3 text-muted">Your basket is empty.</p>
+        <Link href="/shop" className="btn-primary mt-8">
           Start shopping
         </Link>
       </div>
@@ -23,16 +20,16 @@ export default function BasketPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-14">
-      <h1 className="font-display text-3xl font-bold text-ink">Your basket</h1>
+    <div className="mx-auto w-full max-w-3xl px-6 py-16">
+      <h1 className="text-h2 font-semibold tracking-[-0.02em] text-text">Your basket</h1>
 
       <div className="mt-8 flex flex-col gap-4">
         {items.map((item) => (
           <div
             key={item.sku}
-            className="flex items-center gap-4 rounded-brand border border-ink/10 bg-paper p-4"
+            className="flex items-center gap-4 rounded-[var(--radius)] border border-grey-line bg-white p-4"
           >
-            <div className="relative w-20 h-20 shrink-0 bg-cream rounded-brand overflow-hidden">
+            <div className="relative w-20 h-20 shrink-0 bg-blue-tint rounded-[var(--radius)] overflow-hidden">
               {item.image_url && (
                 <Image
                   src={item.image_url}
@@ -45,10 +42,10 @@ export default function BasketPage() {
             </div>
 
             <div className="flex-1 min-w-0">
-              <p className="font-display font-semibold text-ink leading-snug line-clamp-2">
+              <p className="font-medium text-text leading-snug line-clamp-2">
                 {item.name}
               </p>
-              <p className="mt-1 font-bold text-red">£{item.price.toFixed(2)}</p>
+              <p className="mt-1 font-semibold text-navy">£{item.price.toFixed(2)}</p>
             </div>
 
             <div className="flex items-center gap-2">
@@ -56,18 +53,18 @@ export default function BasketPage() {
                 type="button"
                 onClick={() => setQuantity(item.sku, item.quantity - 1)}
                 aria-label={`Decrease quantity of ${item.name}`}
-                className="w-9 h-9 rounded-full ring-1 ring-ink/15 flex items-center justify-center hover:bg-ink/5"
+                className="w-9 h-9 rounded-[var(--radius)] border border-grey-line flex items-center justify-center hover:border-navy transition-colors duration-150"
               >
                 −
               </button>
-              <span className="w-6 text-center font-semibold tabular-nums">
+              <span className="w-6 text-center font-medium tabular-nums">
                 {item.quantity}
               </span>
               <button
                 type="button"
                 onClick={() => setQuantity(item.sku, item.quantity + 1)}
                 aria-label={`Increase quantity of ${item.name}`}
-                className="w-9 h-9 rounded-full ring-1 ring-ink/15 flex items-center justify-center hover:bg-ink/5"
+                className="w-9 h-9 rounded-[var(--radius)] border border-grey-line flex items-center justify-center hover:border-navy transition-colors duration-150"
               >
                 +
               </button>
@@ -77,7 +74,7 @@ export default function BasketPage() {
               type="button"
               onClick={() => removeItem(item.sku)}
               aria-label={`Remove ${item.name} from basket`}
-              className="ml-2 text-sm font-semibold text-ink/50 hover:text-red transition-colors"
+              className="ml-2 text-sm text-muted hover:text-blue transition-colors"
             >
               Remove
             </button>
@@ -85,10 +82,10 @@ export default function BasketPage() {
         ))}
       </div>
 
-      <div className="mt-8 rounded-brand border border-ink/10 bg-paper p-6">
+      <div className="mt-8 rounded-[var(--radius)] border border-grey-line bg-white p-6">
         <div className="flex items-center justify-between">
-          <span className="font-display text-lg font-bold text-ink">Subtotal</span>
-          <span className="font-display text-lg font-bold text-red">
+          <span className="text-lg font-semibold text-text">Subtotal</span>
+          <span className="text-lg font-semibold text-navy">
             £{subtotal.toFixed(2)}
           </span>
         </div>
@@ -96,11 +93,11 @@ export default function BasketPage() {
         <button
           type="button"
           disabled
-          className="mt-5 w-full rounded-full bg-ink/15 text-ink/50 font-semibold px-6 py-3.5 min-h-11 cursor-not-allowed"
+          className="btn-primary mt-5 w-full opacity-50 cursor-not-allowed"
         >
           Checkout — coming soon
         </button>
-        <p className="mt-3 text-sm text-ink/50 text-center">
+        <p className="mt-3 text-sm text-muted text-center">
           On-site checkout isn&apos;t live yet. In the meantime, order via TikTok
           Shop, eBay or Whatnot from each product&apos;s page.
         </p>

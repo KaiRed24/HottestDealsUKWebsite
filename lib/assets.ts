@@ -29,17 +29,3 @@ export function getHeroBanners(): string[] {
     .sort()
     .map((f) => `/hero/${f}`);
 }
-
-// Custom graphics for the "Featured picks" carousel, in filename order.
-// Slide N uses image N here (falling back to that product's own photo if
-// there's no custom graphic for that slot) — no code change needed to add,
-// remove, or reorder them.
-export function getFeaturedImages(): string[] {
-  const dir = path.join(process.cwd(), "public", "featured");
-  if (!fs.existsSync(dir)) return [];
-  return fs
-    .readdirSync(dir)
-    .filter((f) => /\.(jpe?g|png|webp)$/i.test(f))
-    .sort()
-    .map((f) => `/featured/${f}`);
-}

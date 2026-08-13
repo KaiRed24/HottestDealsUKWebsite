@@ -9,11 +9,11 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/product/${product.sku}`}
-      className={`group flex flex-col h-full rounded-brand border border-ink/10 bg-paper overflow-hidden transition-shadow hover:shadow-brand-hover ${
+      className={`group flex flex-col h-full rounded-[var(--radius)] border border-grey-line bg-white overflow-hidden transition-all duration-200 ease-out hover:border-navy hover:-translate-y-0.5 ${
         soldOut ? "opacity-60" : ""
       }`}
     >
-      <div className="relative aspect-square bg-cream p-5">
+      <div className="relative aspect-square bg-blue-tint p-5">
         <Image
           src={product.image_url as string}
           alt={product.name}
@@ -29,21 +29,19 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
 
       <div className="flex flex-1 flex-col p-4">
-        <p className="font-display font-semibold text-[15px] leading-snug text-ink min-h-[3.9em] line-clamp-3">
+        <p className="text-[15px] leading-snug text-text min-h-[3.9em] line-clamp-3">
           {product.name}
         </p>
         <div className="mt-auto pt-3 flex items-center justify-between gap-2">
-          <span className="font-display font-bold text-red text-lg">
+          <span className="font-semibold text-navy text-lg">
             £{product.price.toFixed(2)}
           </span>
           <span
-            className={`text-xs font-semibold rounded-full px-3 py-1.5 ${
-              soldOut
-                ? "bg-ink/8 text-ink/40"
-                : "bg-red text-white group-hover:bg-red-deep transition-colors"
+            className={`text-sm ${
+              soldOut ? "text-muted" : "text-blue group-hover:text-navy transition-colors"
             }`}
           >
-            {soldOut ? "Sold out" : "View"}
+            {soldOut ? "Sold out" : "View →"}
           </span>
         </div>
       </div>

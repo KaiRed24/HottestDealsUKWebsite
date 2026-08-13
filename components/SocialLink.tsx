@@ -18,8 +18,8 @@ export default function SocialLink({
 
   const toneClasses =
     tone === "on-ink"
-      ? "text-cream ring-1 ring-cream/25 hover:bg-cream/10"
-      : "text-ink ring-1 ring-ink/15 hover:bg-ink/5";
+      ? "text-white border border-white/30 hover:bg-white/10"
+      : "text-navy border border-grey-line hover:border-navy";
 
   return (
     <a
@@ -27,7 +27,7 @@ export default function SocialLink({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className={`inline-flex items-center justify-center gap-2 rounded-full px-4 py-3 min-h-11 text-sm font-semibold transition-colors ${toneClasses} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-[var(--radius)] px-4 py-3 min-h-11 text-sm font-medium transition-colors duration-150 ease-out ${toneClasses} ${className}`}
     >
       {/* iconPath is null until public/tiktok.* or public/whatnot.* is added — falls back to a text-only pill rather than approximating the trademark */}
       {iconPath ? (

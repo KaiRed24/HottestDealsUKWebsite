@@ -151,7 +151,7 @@ export default function ShopBrowser({
         }}
         placeholder="Search for candy, soda, chocolate..."
         aria-label="Search products"
-        className="w-full rounded-full border border-ink/15 bg-paper px-4 py-3 text-sm focus:outline-none focus:border-red"
+        className="w-full rounded-[var(--radius)] border border-grey-line bg-white px-4 py-3 text-sm text-text focus:outline-none focus:border-navy"
       />
 
       <CategoryChips
@@ -180,18 +180,18 @@ export default function ShopBrowser({
       />
 
       <div className="flex items-center justify-between gap-3 pt-1">
-        <p className="text-sm text-ink/60">
+        <p className="text-sm text-muted">
           {filtered.length} {filtered.length === 1 ? "product" : "products"}
         </p>
         <label className="flex items-center gap-2 text-sm">
-          <span className="text-ink/60">Sort</span>
+          <span className="text-muted">Sort</span>
           <select
             value={sort}
             onChange={(e) => {
               setSort(e.target.value);
               syncUrl({ sort: e.target.value });
             }}
-            className="rounded-full border border-ink/15 bg-paper px-3 py-2 font-semibold focus:outline-none focus:border-red"
+            className="rounded-[var(--radius)] border border-grey-line bg-white px-3 py-2 text-text font-medium focus:outline-none focus:border-navy"
           >
             {sortOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -204,10 +204,10 @@ export default function ShopBrowser({
 
       {filtered.length === 0 ? (
         <div className="py-16 text-center">
-          <p className="font-display text-xl font-semibold text-ink">
+          <p className="text-h3 font-semibold text-text">
             Nothing matches yet
           </p>
-          <p className="mt-2 text-ink/60">
+          <p className="mt-2 text-muted">
             Try a different category, or clear the search and start again.
           </p>
         </div>

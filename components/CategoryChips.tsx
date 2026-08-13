@@ -21,10 +21,10 @@ export default function CategoryChips({
             type="button"
             onClick={() => onChange(option.value)}
             aria-pressed={active}
-            className={`shrink-0 rounded-full px-4 py-2 min-h-11 text-sm font-semibold border transition-colors ${
+            className={`shrink-0 rounded-[var(--radius)] px-4 py-2 min-h-11 text-sm border transition-colors duration-150 ease-out ${
               active
-                ? "bg-red text-cream border-red"
-                : "bg-paper text-ink border-ink/15 hover:border-ink/40"
+                ? "bg-navy text-white border-navy font-medium"
+                : "bg-white text-muted border-grey-line hover:border-navy hover:text-navy"
             }`}
           >
             {option.label}

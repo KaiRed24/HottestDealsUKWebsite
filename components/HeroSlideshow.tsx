@@ -101,11 +101,12 @@ export default function HeroSlideshow({ images }: { images: string[] }) {
         ))}
       </div>
 
-      {/* Light bottom scrim only, so overlaid text stays readable without dulling the photo */}
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/45 to-transparent pointer-events-none" />
+      {/* The navy overlay gradient that makes the left-aligned text readable
+          lives in app/page.tsx (it needs to sit above the slideshow but
+          below the copy) — nothing more needed here. */}
 
       {images.length > 1 && (
-        <div className="absolute bottom-5 left-0 right-0 flex items-center justify-center gap-3 z-10">
+        <div className="absolute bottom-6 left-6 flex items-center gap-3 z-10">
           <div className="flex items-center gap-2" role="tablist" aria-label="Choose banner">
             {images.map((src, i) => (
               <button
@@ -115,8 +116,8 @@ export default function HeroSlideshow({ images }: { images: string[] }) {
                 aria-selected={i === index}
                 aria-label={`Show banner ${i + 1}`}
                 onClick={() => goTo(i)}
-                className={`h-2 rounded-full transition-all motion-reduce:transition-none ${
-                  i === index ? "w-6 bg-white" : "w-2 bg-white/50 hover:bg-white/80"
+                className={`h-1.5 rounded-full transition-all duration-200 ease-out motion-reduce:transition-none ${
+                  i === index ? "w-6 bg-white" : "w-1.5 bg-white/40 hover:bg-white/70"
                 }`}
               />
             ))}
@@ -125,7 +126,7 @@ export default function HeroSlideshow({ images }: { images: string[] }) {
             type="button"
             onClick={() => setIsPlaying((p) => !p)}
             aria-label={isPlaying ? "Pause banner slideshow" : "Play banner slideshow"}
-            className="w-8 h-8 rounded-full bg-black/20 text-white flex items-center justify-center hover:bg-black/30 text-xs"
+            className="w-7 h-7 rounded-full border border-white/40 text-white flex items-center justify-center hover:bg-white/10 transition-colors duration-150 text-xs"
           >
             {isPlaying ? "❚❚" : "▶"}
           </button>

@@ -23,7 +23,7 @@ export default function Logo({
         />
       ) : (
         <span
-          className={`font-display font-extrabold text-red tracking-tight leading-none ${className} flex items-center`}
+          className={`font-semibold text-navy tracking-[-0.02em] leading-none ${className} flex items-center`}
           style={{ fontSize: "1.5rem" }}
         >
           Hottest Deals UK

@@ -45,8 +45,8 @@ export default async function ProductPage({
   const hasTiktok = Boolean(product.tiktok_url);
 
   return (
-    <div className="mx-auto w-full max-w-4xl px-4 py-8 grid gap-8 sm:grid-cols-2 sm:items-start">
-      <div className="relative aspect-square rounded-brand overflow-hidden border border-ink/10 bg-cream p-6">
+    <div className="mx-auto w-full max-w-4xl px-6 py-16 grid gap-10 sm:grid-cols-2 sm:items-start">
+      <div className="relative aspect-square rounded-[var(--radius)] overflow-hidden border border-grey-line bg-blue-tint p-6">
         <Image
           src={product.image_url as string}
           alt={product.name}
@@ -58,10 +58,10 @@ export default async function ProductPage({
       </div>
 
       <div>
-        <h1 className="font-display text-3xl font-bold text-ink">
+        <h1 className="text-h3 sm:text-h2 font-semibold tracking-[-0.02em] text-text">
           {product.name}
         </h1>
-        <p className="mt-2 font-display text-2xl font-bold text-red">
+        <p className="mt-2 text-2xl font-semibold text-navy">
           £{product.price.toFixed(2)}
         </p>
 
@@ -70,7 +70,7 @@ export default async function ProductPage({
         </div>
 
         {product.description && (
-          <p className="mt-4 text-ink/80 leading-relaxed">
+          <p className="mt-4 text-muted leading-relaxed">
             {product.description}
           </p>
         )}
@@ -86,7 +86,7 @@ export default async function ProductPage({
                 href={product.tiktok_url!}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 text-center rounded-full bg-red text-cream font-semibold py-3.5 min-h-11 hover:bg-red-deep transition-colors"
+                className="btn-primary flex-1"
               >
                 Buy on TikTok
               </a>
@@ -95,7 +95,7 @@ export default async function ProductPage({
                 type="button"
                 disabled
                 aria-disabled="true"
-                className="flex-1 text-center rounded-full bg-ink/10 text-ink/40 font-semibold py-3.5 min-h-11 cursor-not-allowed"
+                className="btn-primary flex-1 opacity-50 cursor-not-allowed"
               >
                 Buy on TikTok
               </button>
@@ -107,7 +107,7 @@ export default async function ProductPage({
                 href={product.ebay_url!}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 text-center rounded-full ring-1 ring-ink text-ink font-semibold py-3.5 min-h-11 hover:bg-ink/5 transition-colors"
+                className="btn-secondary flex-1"
               >
                 Buy on eBay
               </a>
@@ -116,7 +116,7 @@ export default async function ProductPage({
                 type="button"
                 disabled
                 aria-disabled="true"
-                className="flex-1 text-center rounded-full ring-1 ring-ink/15 text-ink/40 font-semibold py-3.5 min-h-11 cursor-not-allowed"
+                className="btn-secondary flex-1 opacity-50 cursor-not-allowed"
               >
                 Buy on eBay
               </button>
@@ -124,12 +124,12 @@ export default async function ProductPage({
         </div>
 
         {!inStock && (
-          <p className="mt-4 text-sm text-ink/60">
+          <p className="mt-4 text-sm text-muted">
             Sold out — follow us on TikTok to know when it&apos;s back.
           </p>
         )}
         {inStock && !hasEbay && !hasTiktok && (
-          <p className="mt-4 text-sm text-ink/60">
+          <p className="mt-4 text-sm text-muted">
             Coming soon to our shop channels.
           </p>
         )}

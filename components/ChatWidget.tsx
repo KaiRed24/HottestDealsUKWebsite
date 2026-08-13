@@ -51,7 +51,7 @@ function OfferBanner({
 
   if (status === "submitted") {
     return (
-      <div className="bg-gold text-gold-ink px-4 py-3 text-sm font-semibold text-center">
+      <div className="bg-blue-tint text-navy px-4 py-3 text-sm font-medium text-center">
         Thanks! We&apos;ll email your 30% off mystery box code shortly.
       </div>
     );
@@ -63,17 +63,17 @@ function OfferBanner({
         e.preventDefault();
         if (email.trim()) onSubmit(email.trim());
       }}
-      className="bg-gold text-gold-ink px-4 py-3 flex flex-col gap-2"
+      className="bg-blue-tint text-text px-4 py-3 flex flex-col gap-2"
     >
       <div className="flex items-start justify-between gap-2">
-        <p className="text-sm font-semibold leading-snug">
+        <p className="text-sm leading-snug">
           New customers get 30% off mystery boxes — pop your email in to claim it.
         </p>
         <button
           type="button"
           onClick={onDismiss}
           aria-label="Dismiss offer"
-          className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center hover:bg-gold-ink/10"
+          className="shrink-0 w-6 h-6 rounded-[var(--radius)] flex items-center justify-center hover:bg-navy/10"
         >
           ×
         </button>
@@ -85,18 +85,18 @@ function OfferBanner({
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@example.com"
-          className="flex-1 rounded-full border border-gold-ink/25 bg-paper px-3 py-1.5 text-sm text-ink"
+          className="flex-1 rounded-[var(--radius)] border border-grey-line bg-white px-3 py-1.5 text-sm text-text focus:outline-none focus:border-navy"
         />
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="rounded-full bg-red text-white font-semibold px-3 py-1.5 text-sm hover:bg-red-deep transition-colors disabled:opacity-60"
+          className="rounded-[var(--radius)] bg-navy text-white font-medium px-3 py-1.5 text-sm hover:bg-blue transition-colors duration-150 disabled:opacity-60"
         >
           {status === "submitting" ? "Sending…" : "Claim"}
         </button>
       </div>
       {status === "error" && (
-        <p className="text-xs text-red font-medium">
+        <p className="text-xs text-blue font-medium">
           Something went wrong — please try again.
         </p>
       )}
@@ -178,14 +178,14 @@ export default function ChatWidget() {
   return (
     <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3">
       {open && (
-        <div className="w-[92vw] max-w-sm h-[70vh] max-h-[560px] flex flex-col rounded-brand border border-ink/10 bg-paper shadow-brand-hover overflow-hidden">
-          <div className="flex items-center justify-between bg-red text-white px-4 py-3">
-            <span className="font-display font-bold">Chat with us</span>
+        <div className="w-[92vw] max-w-sm h-[70vh] max-h-[560px] flex flex-col rounded-[var(--radius)] border border-grey-line bg-white overflow-hidden">
+          <div className="flex items-center justify-between bg-navy text-white px-4 py-3">
+            <span className="font-medium">Chat with us</span>
             <button
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close chat"
-              className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/15 transition-colors"
+              className="w-8 h-8 rounded-[var(--radius)] flex items-center justify-center hover:bg-white/15 transition-colors duration-150"
             >
               ×
             </button>
@@ -206,34 +206,34 @@ export default function ChatWidget() {
             {messages.map((m, i) => (
               <div
                 key={i}
-                className={`max-w-[80%] px-4 py-2 rounded-2xl text-sm leading-relaxed ${
+                className={`max-w-[80%] px-4 py-2 rounded-[var(--radius)] text-sm leading-relaxed ${
                   m.role === "user"
-                    ? "self-end bg-red text-white"
-                    : "self-start bg-cream text-ink"
+                    ? "self-end bg-navy text-white"
+                    : "self-start bg-blue-tint text-text"
                 }`}
               >
                 {m.content}
               </div>
             ))}
             {loading && (
-              <div className="self-start bg-cream text-ink/60 px-4 py-2 rounded-2xl text-sm">
+              <div className="self-start bg-blue-tint text-muted px-4 py-2 rounded-[var(--radius)] text-sm">
                 Typing…
               </div>
             )}
           </div>
 
-          <form onSubmit={handleSend} className="border-t border-ink/10 p-3 flex gap-2">
+          <form onSubmit={handleSend} className="border-t border-grey-line p-3 flex gap-2">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask a question…"
-              className="flex-1 rounded-full border border-ink/15 bg-paper px-4 py-2 text-sm text-ink"
+              className="flex-1 rounded-[var(--radius)] border border-grey-line bg-white px-4 py-2 text-sm text-text focus:outline-none focus:border-navy"
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="rounded-full bg-red text-white font-semibold px-4 py-2 text-sm hover:bg-red-deep transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="rounded-[var(--radius)] bg-navy text-white font-medium px-4 py-2 text-sm hover:bg-blue transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Send
             </button>
@@ -245,7 +245,7 @@ export default function ChatWidget() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close chat" : "Open chat"}
-        className="w-14 h-14 rounded-full bg-red text-white flex items-center justify-center shadow-brand-hover hover:bg-red-deep transition-colors"
+        className="w-14 h-14 rounded-full bg-navy text-white flex items-center justify-center hover:bg-blue transition-colors duration-150"
       >
         <CandyIcon />
       </button>

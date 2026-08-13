@@ -31,10 +31,8 @@ export default function AddToBasketButton({
       type="button"
       onClick={handleClick}
       disabled={soldOut}
-      className={`rounded-full font-semibold px-6 py-3.5 min-h-11 transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
-        added
-          ? "bg-gold text-gold-ink"
-          : "bg-red text-white hover:bg-red-deep"
+      className={`rounded-[var(--radius)] font-medium px-6 py-3.5 min-h-11 transition-colors duration-150 ease-out disabled:opacity-50 disabled:cursor-not-allowed ${
+        added ? "bg-blue-tint text-navy border border-navy" : "bg-navy text-white hover:bg-blue"
       } ${className}`}
     >
       {soldOut ? "Sold out" : added ? "Added ✓" : "Add to basket"}

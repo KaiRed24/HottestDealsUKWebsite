@@ -25,11 +25,11 @@ export default async function ShopPage({
   const products = await getProducts();
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8">
-      <h1 className="font-display text-3xl sm:text-4xl font-bold text-ink">
+    <div className="mx-auto w-full max-w-[1280px] px-6 py-16">
+      <h1 className="text-h2 sm:text-display font-semibold tracking-[-0.02em] text-text">
         Shop all products
       </h1>
-      <p className="mt-1 text-ink/60">
+      <p className="mt-2 text-muted">
         {products.length} imported treats, ready to ship.
       </p>
 

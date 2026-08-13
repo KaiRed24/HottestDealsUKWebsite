@@ -7,11 +7,11 @@ export const metadata: Metadata = {
 
 export default function RefundsPage() {
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-12">
-      <h1 className="font-display text-3xl sm:text-4xl font-bold text-ink">
+    <div className="mx-auto w-full max-w-3xl px-6 py-16">
+      <h1 className="text-h2 sm:text-display font-semibold tracking-[-0.02em] text-text">
         Refund policy
       </h1>
-      <div className="mt-6 rounded-brand border border-ink/10 bg-paper p-6 text-ink/80 leading-relaxed">
+      <div className="mt-6 rounded-[var(--radius)] border border-grey-line bg-white p-6 text-muted leading-relaxed">
         <p>
           This page is a placeholder. Our full refund policy hasn&apos;t
           been written yet — we&apos;d rather leave this honest than invent
@@ -23,7 +23,7 @@ export default function RefundsPage() {
           something&apos;s wrong with your order, email{" "}
           <a
             href="mailto:hello@hottestdealsuk.co.uk"
-            className="font-bold text-red hover:underline"
+            className="font-medium text-blue hover:text-navy transition-colors"
           >
             hello@hottestdealsuk.co.uk
           </a>{" "}

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import Logo from "@/components/Logo";
 import SocialLink from "@/components/SocialLink";
@@ -18,13 +19,16 @@ const categoryLinks = [
   { href: "/shop?category=bundles", label: "Bundles" },
 ];
 
-// Same accent cycle as the "Shop top brands" tiles, so the nav echoes that theme.
-const TONES = [
-  "bg-red text-cream hover:bg-red-deep",
-  "bg-gold text-gold-ink hover:bg-gold/80",
-  "bg-red-deep text-cream hover:bg-red",
-  "bg-paper text-ink ring-1 ring-ink/15 hover:bg-ink/5",
-];
+function useIsActive() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  return (href: string) => {
+    const [path, query] = href.split("?");
+    if (pathname !== path) return false;
+    if (!query) return !searchParams.toString();
+    return new URLSearchParams(query).toString() === searchParams.toString();
+  };
+}
 
 function BasketIcon() {
   return (
@@ -51,11 +55,11 @@ function BasketLink({ className = "" }: { className?: string }) {
     <Link
       href="/basket"
       aria-label={`Basket, ${count} ${count === 1 ? "item" : "items"}`}
-      className={`relative flex items-center justify-center w-11 h-11 rounded-full text-ink hover:bg-ink/5 transition-colors ${className}`}
+      className={`relative flex items-center justify-center w-11 h-11 rounded-full text-navy hover:bg-blue-tint transition-colors duration-150 ${className}`}
     >
       <BasketIcon />
       {count > 0 && (
-        <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-red text-white text-[11px] font-bold flex items-center justify-center">
+        <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-navy text-white text-[11px] font-medium flex items-center justify-center">
           {count}
         </span>
       )}
@@ -77,9 +81,10 @@ export default function Nav({
   userEmail: string | null;
 }) {
   const [open, setOpen] = useState(false);
+  const isActive = useIsActive();
 
   return (
-    <header className="sticky top-0 z-50 bg-cream border-b border-ink/10">
+    <header className="sticky top-0 z-50 bg-white border-b border-grey-line">
       <div className="flex items-center justify-between h-24 pl-2 pr-3 sm:pl-3 sm:pr-4">
         <Logo hasLogo={hasLogo} logoVersion={logoVersion} className="h-20 sm:h-24" />
 
@@ -87,11 +92,11 @@ export default function Nav({
           <SocialLink platform="tiktok" iconPath={tiktokIconPath} />
           <SocialLink platform="whatnot" iconPath={whatnotIconPath} />
 
-          <span className="w-px h-6 bg-ink/10 mx-1" aria-hidden />
+          <span className="w-px h-6 bg-grey-line mx-1" aria-hidden />
 
           <Link
             href={userEmail ? "/account" : "/account/login"}
-            className="px-3 py-2 rounded-full text-sm font-semibold text-ink/80 hover:text-ink hover:bg-ink/5 transition-colors"
+            className="px-3 py-2 rounded-[var(--radius)] text-sm text-muted hover:text-navy transition-colors"
           >
             {userEmail ? "My account" : "Log in"}
           </Link>
@@ -110,68 +115,73 @@ export default function Nav({
           onClick={() => setOpen((v) => !v)}
         >
           <span
-            className={`block h-0.5 w-6 bg-ink transition-transform motion-reduce:transition-none ${
+            className={`block h-0.5 w-6 bg-navy transition-transform motion-reduce:transition-none ${
               open ? "translate-y-2 rotate-45" : ""
             }`}
           />
           <span
-            className={`block h-0.5 w-6 bg-ink transition-opacity motion-reduce:transition-none ${
+            className={`block h-0.5 w-6 bg-navy transition-opacity motion-reduce:transition-none ${
               open ? "opacity-0" : ""
             }`}
           />
           <span
-            className={`block h-0.5 w-6 bg-ink transition-transform motion-reduce:transition-none ${
+            className={`block h-0.5 w-6 bg-navy transition-transform motion-reduce:transition-none ${
               open ? "-translate-y-2 -rotate-45" : ""
             }`}
           />
         </button>
       </div>
 
-      <div className="mx-auto max-w-6xl px-4">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
         <nav
           aria-label="Categories"
-          className="hidden lg:flex items-center gap-2 pb-3 flex-wrap"
+          className="hidden lg:flex items-center gap-6 pb-3 flex-wrap"
         >
-          {categoryLinks.map((link, i) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
-                TONES[i % TONES.length]
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {categoryLinks.map((link) => {
+            const active = isActive(link.href);
+            return (
+              <Link
+                key={link.label}
+                href={link.href}
+                className={`text-sm pb-1 border-b-2 transition-colors ${
+                  active
+                    ? "border-navy text-navy font-medium"
+                    : "border-transparent text-muted hover:text-navy"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
       </div>
 
       {open && (
-        <div className="lg:hidden border-t border-ink/10 bg-cream">
+        <div className="lg:hidden border-t border-grey-line bg-white">
           <Link
             href={userEmail ? "/account" : "/account/login"}
             onClick={() => setOpen(false)}
-            className="block px-4 py-4 border-b border-ink/10 font-semibold text-ink"
+            className="block px-4 py-4 border-b border-grey-line font-medium text-navy"
           >
             {userEmail ? "My account" : "Log in / Create account"}
           </Link>
 
-          <nav
-            aria-label="Categories"
-            className="flex flex-wrap gap-2 px-4 py-4"
-          >
-            {categoryLinks.map((link, i) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={`px-4 py-2.5 rounded-full text-sm font-semibold transition-colors ${
-                  TONES[i % TONES.length]
-                }`}
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+          <nav aria-label="Categories" className="flex flex-col px-4 py-2">
+            {categoryLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={`py-3 border-b border-grey-line text-sm ${
+                    active ? "text-navy font-medium" : "text-muted"
+                  }`}
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
           <div className="flex gap-3 px-4 py-4">
             <SocialLink

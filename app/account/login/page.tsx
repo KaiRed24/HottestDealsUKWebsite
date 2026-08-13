@@ -31,52 +31,48 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto w-full max-w-md px-4 py-14">
-      <h1 className="font-display text-3xl font-bold text-ink">Log in</h1>
-      <p className="mt-2 text-ink/70">Welcome back to Hottest Deals UK.</p>
+      <h1 className="text-h2 font-semibold tracking-[-0.02em] text-text">Log in</h1>
+      <p className="mt-2 text-muted">Welcome back to Hottest Deals UK.</p>
 
       <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4">
         <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-semibold text-ink">Email</span>
+          <span className="text-sm font-medium text-text">Email</span>
           <input
             type="email"
             required
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="rounded-brand border border-ink/15 bg-paper px-4 py-3 text-ink"
+            className="rounded-[var(--radius)] border border-grey-line bg-white px-4 py-3 text-text focus:outline-none focus:border-navy"
           />
         </label>
 
         <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-semibold text-ink">Password</span>
+          <span className="text-sm font-medium text-text">Password</span>
           <input
             type="password"
             required
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="rounded-brand border border-ink/15 bg-paper px-4 py-3 text-ink"
+            className="rounded-[var(--radius)] border border-grey-line bg-white px-4 py-3 text-text focus:outline-none focus:border-navy"
           />
         </label>
 
-        {error && <p className="text-sm text-red font-medium">{error}</p>}
+        {error && <p className="text-sm text-blue font-medium">{error}</p>}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="mt-2 rounded-full bg-red text-white font-semibold px-6 py-3.5 min-h-11 hover:bg-red-deep transition-colors disabled:opacity-60"
-        >
+        <button type="submit" disabled={loading} className="btn-primary mt-2">
           {loading ? "Logging in…" : "Log in"}
         </button>
       </form>
 
-      <div className="mt-6 flex flex-col gap-2 text-sm text-ink/70">
-        <Link href="/account/reset-password" className="hover:text-ink">
+      <div className="mt-6 flex flex-col gap-2 text-sm text-muted">
+        <Link href="/account/reset-password" className="hover:text-navy transition-colors">
           Forgot your password?
         </Link>
         <p>
           New here?{" "}
-          <Link href="/account/signup" className="font-semibold text-red hover:underline">
+          <Link href="/account/signup" className="font-medium text-blue hover:text-navy transition-colors">
             Create an account
           </Link>
         </p>
