@@ -4,9 +4,10 @@
   /* Two-tone brand palette — flat blue-deep/blue-pale bands everywhere,
      white reserved strictly for cards. See AGENTS notes in this file for
      where each token is used. */
-  --blue-deep: #233a73; /* nav, hero overlay, alternating dark bands, footer */
-  --blue-mid: #3b5ba5; /* promo strip under nav, hover states */
-  --blue-pale: #e7eefa; /* alternating light bands */
+  --blue-deep: #2e5aa8; /* nav, hero overlay, alternating dark bands, footer */
+  --blue-mid: #3e6dc4; /* promo strip under nav, hover states */
+  --blue-pale: #b9d2fa; /* alternating light bands — must read as visibly
+    blue, not near-white, so white cards clearly pop off it */
   --blue-accent: #2563eb; /* buttons, links, calls to action */
   --ink: #16244a; /* dark text — ONLY on --blue-pale or white cards */
   --surface: #ffffff; /* white — ONLY for cards on top of a blue background */
