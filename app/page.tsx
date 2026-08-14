@@ -13,14 +13,6 @@ import Reveal from "@/components/Reveal";
 
 export const revalidate = 60;
 
-const categoryTiles = [
-  { value: "candy", label: "Candy" },
-  { value: "chocolate", label: "Chocolate" },
-  { value: "drinks", label: "Drinks" },
-  { value: "snacks", label: "Crisps & Snacks" },
-  { value: "bundles", label: "Bundles" },
-];
-
 // The Featured Picks carousel — only shown once its image is uploaded to
 // public/category-carousel/<value>.jpg, so a half-configured slide never
 // goes live with a broken image.
@@ -103,26 +95,6 @@ export default async function Home() {
       {/* Featured picks — full-bleed category carousel, matching the Hero's
           treatment. Waiting on real photos, see chat for upload status. */}
       <CategoryCarousel slides={categorySlides} />
-
-      {/* Shop by category */}
-      <section className="mx-auto w-full max-w-[1280px] px-6 py-24 sm:py-32 border-b border-grey-line">
-        <Reveal>
-          <h2 className="text-h2 font-semibold tracking-[-0.02em] text-text mb-10">
-            Shop by category
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            {categoryTiles.map((tile) => (
-              <Link
-                key={tile.value}
-                href={`/shop?category=${tile.value}`}
-                className="rounded-[var(--radius)] bg-navy min-h-28 p-5 flex items-end font-medium text-white transition-all duration-200 ease-out hover:bg-ink hover:-translate-y-0.5"
-              >
-                {tile.label}
-              </Link>
-            ))}
-          </div>
-        </Reveal>
-      </section>
 
       {/* Bundles & mystery boxes */}
       {bundles.length > 0 && (

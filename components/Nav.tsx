@@ -16,7 +16,6 @@ const categoryLinks = [
   { href: "/shop?category=drinks", label: "Drinks" },
   { href: "/shop?category=candy", label: "Candy" },
   { href: "/shop?category=chocolate", label: "Chocolate" },
-  { href: "/shop?category=bundles", label: "Bundles" },
 ];
 
 function useIsActive() {

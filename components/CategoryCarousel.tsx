@@ -58,7 +58,10 @@ export default function CategoryCarousel({ slides }: { slides: CategorySlide[] }
         if (!e.currentTarget.contains(e.relatedTarget as Node)) setIsHovered(false);
       }}
     >
-      <div className="relative h-[420px] sm:h-[520px]">
+      {/* aspect-[3/2] matches the actual source graphics (1536×1024) so
+          object-contain shows each one in full, with no cropping — a fixed
+          pixel height here would force a mismatched ratio and crop them. */}
+      <div className="relative aspect-[3/2] bg-navy">
         {slides.map((s, i) => (
           <div
             key={s.value}
@@ -73,14 +76,17 @@ export default function CategoryCarousel({ slides }: { slides: CategorySlide[] }
               fill
               priority={i === 0}
               sizes="100vw"
-              className="object-cover"
+              className="object-contain"
             />
           </div>
         ))}
 
-        <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/45 to-navy/10 pointer-events-none" />
+        {/* Uniform tint (not a directional gradient) — the text is now
+            centred, so it needs even contrast regardless of which part of
+            the busy source graphic sits behind it. */}
+        <div className="absolute inset-0 bg-navy/55 pointer-events-none" />
 
-        <div className="relative z-10 h-full mx-auto max-w-[1280px] px-6 flex flex-col justify-center items-start">
+        <div className="relative z-10 h-full mx-auto max-w-[1280px] px-6 flex flex-col justify-center items-center text-center">
           <p className="text-small uppercase tracking-wide text-white/70">
             Shop by category
           </p>
