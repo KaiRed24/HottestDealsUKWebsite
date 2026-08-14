@@ -18,7 +18,7 @@ export default function TopBrands({ brands }: { brands: TopBrand[] }) {
           key={brand.slug}
           href={`/shop?q=${encodeURIComponent(brand.name)}`}
           aria-label={`Shop ${brand.name}`}
-          className="group flex flex-col aspect-[4/5] rounded-[var(--radius)] border border-grey-line bg-white p-6 transition-all duration-200 ease-out hover:border-navy hover:-translate-y-0.5"
+          className="group flex flex-col aspect-[4/5] rounded-[var(--radius)] bg-white p-6 shadow-[var(--shadow-card)] transition-all duration-200 ease-out hover:shadow-[var(--shadow-hover)] hover:-translate-y-0.5"
         >
           <div className="relative flex-1">
             {brand.logoPath ? (

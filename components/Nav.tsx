@@ -54,11 +54,11 @@ function BasketLink({ className = "" }: { className?: string }) {
     <Link
       href="/basket"
       aria-label={`Basket, ${count} ${count === 1 ? "item" : "items"}`}
-      className={`relative flex items-center justify-center w-11 h-11 rounded-full text-navy hover:bg-blue-tint transition-colors duration-150 ${className}`}
+      className={`relative flex items-center justify-center w-11 h-11 rounded-full text-white hover:bg-white/10 transition-colors duration-150 ${className}`}
     >
       <BasketIcon />
       {count > 0 && (
-        <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-navy text-white text-[11px] font-medium flex items-center justify-center">
+        <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-white text-blue-deep text-[11px] font-medium flex items-center justify-center">
           {count}
         </span>
       )}
@@ -83,19 +83,19 @@ export default function Nav({
   const isActive = useIsActive();
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-grey-line">
+    <header className="sticky top-0 z-50 bg-blue-deep">
       <div className="flex items-center justify-between h-24 pl-2 pr-3 sm:pl-3 sm:pr-4">
         <Logo hasLogo={hasLogo} logoVersion={logoVersion} className="h-20 sm:h-24" />
 
         <div className="hidden lg:flex items-center gap-3">
-          <SocialLink platform="tiktok" iconPath={tiktokIconPath} tone="solid-navy" />
-          <SocialLink platform="whatnot" iconPath={whatnotIconPath} tone="solid-navy" />
+          <SocialLink platform="tiktok" iconPath={tiktokIconPath} tone="solid-white" />
+          <SocialLink platform="whatnot" iconPath={whatnotIconPath} tone="solid-white" />
 
-          <span className="w-px h-6 bg-grey-line mx-1" aria-hidden />
+          <span className="w-px h-6 bg-white/20 mx-1" aria-hidden />
 
           <Link
             href={userEmail ? "/account" : "/account/login"}
-            className="px-3 py-2 rounded-[var(--radius)] text-sm text-muted hover:text-navy transition-colors"
+            className="px-3 py-2 rounded-[var(--radius)] text-sm text-white/80 hover:text-white transition-colors"
           >
             {userEmail ? "My account" : "Log in"}
           </Link>
@@ -114,17 +114,17 @@ export default function Nav({
           onClick={() => setOpen((v) => !v)}
         >
           <span
-            className={`block h-0.5 w-6 bg-navy transition-transform motion-reduce:transition-none ${
+            className={`block h-0.5 w-6 bg-white transition-transform motion-reduce:transition-none ${
               open ? "translate-y-2 rotate-45" : ""
             }`}
           />
           <span
-            className={`block h-0.5 w-6 bg-navy transition-opacity motion-reduce:transition-none ${
+            className={`block h-0.5 w-6 bg-white transition-opacity motion-reduce:transition-none ${
               open ? "opacity-0" : ""
             }`}
           />
           <span
-            className={`block h-0.5 w-6 bg-navy transition-transform motion-reduce:transition-none ${
+            className={`block h-0.5 w-6 bg-white transition-transform motion-reduce:transition-none ${
               open ? "-translate-y-2 -rotate-45" : ""
             }`}
           />
@@ -144,8 +144,8 @@ export default function Nav({
                 href={link.href}
                 className={`text-sm pb-1 border-b-2 transition-colors ${
                   active
-                    ? "border-navy text-navy font-medium"
-                    : "border-transparent text-muted hover:text-navy"
+                    ? "border-white text-white font-medium"
+                    : "border-transparent text-white/70 hover:text-white"
                 }`}
               >
                 {link.label}
@@ -156,11 +156,11 @@ export default function Nav({
       </div>
 
       {open && (
-        <div className="lg:hidden border-t border-grey-line bg-white">
+        <div className="lg:hidden border-t border-white/15 bg-blue-deep">
           <Link
             href={userEmail ? "/account" : "/account/login"}
             onClick={() => setOpen(false)}
-            className="block px-4 py-4 border-b border-grey-line font-medium text-navy"
+            className="block px-4 py-4 border-b border-white/15 font-medium text-white"
           >
             {userEmail ? "My account" : "Log in / Create account"}
           </Link>
@@ -172,8 +172,8 @@ export default function Nav({
                 <Link
                   key={link.label}
                   href={link.href}
-                  className={`py-3 border-b border-grey-line text-sm ${
-                    active ? "text-navy font-medium" : "text-muted"
+                  className={`py-3 border-b border-white/15 text-sm ${
+                    active ? "text-white font-medium" : "text-white/70"
                   }`}
                   onClick={() => setOpen(false)}
                 >
@@ -186,13 +186,13 @@ export default function Nav({
             <SocialLink
               platform="tiktok"
               iconPath={tiktokIconPath}
-              tone="solid-navy"
+              tone="solid-white"
               className="flex-1"
             />
             <SocialLink
               platform="whatnot"
               iconPath={whatnotIconPath}
-              tone="solid-navy"
+              tone="solid-white"
               className="flex-1"
             />
           </div>

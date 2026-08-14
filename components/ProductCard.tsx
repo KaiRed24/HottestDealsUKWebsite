@@ -18,7 +18,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <div
-      className={`group flex flex-col h-full rounded-[var(--radius-lg)] border border-line bg-surface overflow-hidden transition-all duration-200 ease-out hover:border-ink/30 hover:-translate-y-0.5 hover:shadow-[var(--shadow-hover)] ${
+      className={`group flex flex-col h-full rounded-[var(--radius-lg)] bg-surface overflow-hidden shadow-[var(--shadow-card)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-hover)] ${
         soldOut ? "opacity-60" : ""
       }`}
     >

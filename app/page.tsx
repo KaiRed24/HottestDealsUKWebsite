@@ -77,7 +77,7 @@ export default async function Home() {
 
       {/* Top brands */}
       {topBrands.length > 0 && (
-        <section className="w-full px-6 py-24 sm:py-32 border-b border-grey-line">
+        <section className="w-full bg-blue-pale px-6 py-24 sm:py-32">
           <Reveal className="mx-auto max-w-[1280px] flex items-end justify-between mb-10">
             <h2 className="text-h2 font-semibold tracking-[-0.02em] text-text">
               Shop top brands
@@ -96,22 +96,24 @@ export default async function Home() {
           treatment. Waiting on real photos, see chat for upload status. */}
       <CategoryCarousel slides={categorySlides} />
 
-      {/* Bundles & mystery boxes */}
+      {/* Bundles & mystery boxes — deep, alternating from Top Brands (pale)
+          above and Follow Us (pale) below, so the footer (mandatorily
+          deep) still alternates correctly against its neighbour. */}
       {bundles.length > 0 && (
-        <section className="bg-blue-tint">
+        <section className="bg-blue-deep">
           <div className="mx-auto w-full max-w-[1280px] px-6 py-24 sm:py-32">
             <Reveal className="flex items-end justify-between mb-10">
               <div>
-                <h2 className="text-h2 font-semibold tracking-[-0.02em] text-text">
+                <h2 className="text-h2 font-semibold tracking-[-0.02em] text-white">
                   Bundles &amp; mystery boxes
                 </h2>
-                <p className="mt-2 text-muted">
+                <p className="mt-2 text-white/70">
                   More for less — our biggest value picks.
                 </p>
               </div>
               <Link
                 href="/shop?category=bundles"
-                className="text-sm text-blue hover:text-navy transition-colors shrink-0"
+                className="text-sm text-white hover:text-white/80 transition-colors shrink-0"
               >
                 Shop all
               </Link>
@@ -125,13 +127,14 @@ export default async function Home() {
         </section>
       )}
 
-      {/* Follow us */}
-      <section className="bg-navy">
+      {/* Follow us — pale, so it alternates correctly into the (mandatorily
+          deep) footer below. */}
+      <section className="bg-blue-pale">
         <Reveal className="mx-auto w-full max-w-[1280px] px-6 py-24 sm:py-32 text-center">
-          <h2 className="text-h2 font-semibold tracking-[-0.02em] text-white">
+          <h2 className="text-h2 font-semibold tracking-[-0.02em] text-ink">
             36,000+ people follow us for restocks and drops
           </h2>
-          <p className="mt-3 text-white/70">
+          <p className="mt-3 text-muted">
             TikTok for unboxings and new arrivals. Whatnot for live auctions
             and drops.
           </p>
@@ -140,13 +143,13 @@ export default async function Home() {
               platform="tiktok"
               iconPath={socialIcons.tiktok}
               showFollowPrefix
-              tone="solid-white"
+              tone="solid-blue"
             />
             <SocialLink
               platform="whatnot"
               iconPath={socialIcons.whatnot}
               showFollowPrefix
-              tone="solid-white"
+              tone="solid-blue"
             />
           </div>
         </Reveal>
