@@ -15,22 +15,18 @@ export type CategorySlide = {
 export default function CategoryCarousel({ slides }: { slides: CategorySlide[] }) {
   const [index, setIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isHovered, setIsHovered] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  // Reduced-motion users still get autoplay (it's just content changing,
+  // not a decorative animation) — this only strips the crossfade transition
+  // further down, via motion-reduce: classes.
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(query.matches);
-    const onChange = () => setReducedMotion(query.matches);
-    query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
-  }, []);
 
   const goTo = (i: number) => setIndex((i + slides.length) % slides.length);
 
   useEffect(() => {
-    if (!isPlaying || isHovered || reducedMotion || slides.length <= 1) {
+    // Deliberately NOT paused on hover — this carousel is full-width, so
+    // "mouse anywhere over it" would mean it almost never actually plays.
+    // The visible pause button is the control instead.
+    if (!isPlaying || slides.length <= 1) {
       if (timerRef.current) clearInterval(timerRef.current);
       return;
     }
@@ -40,7 +36,7 @@ export default function CategoryCarousel({ slides }: { slides: CategorySlide[] }
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isPlaying, isHovered, reducedMotion, slides.length]);
+  }, [isPlaying, slides.length]);
 
   if (slides.length === 0) return null;
 
@@ -51,12 +47,6 @@ export default function CategoryCarousel({ slides }: { slides: CategorySlide[] }
       className="relative overflow-hidden"
       aria-roledescription="carousel"
       aria-label="Shop by category"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onFocus={() => setIsHovered(true)}
-      onBlur={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node)) setIsHovered(false);
-      }}
     >
       {/* aspect-[3/2] matches the actual source graphics (1536×1024) so
           object-contain shows each one in full, with no cropping — a fixed
@@ -102,31 +92,50 @@ export default function CategoryCarousel({ slides }: { slides: CategorySlide[] }
         </div>
 
         {slides.length > 1 && (
-          <div className="absolute bottom-6 left-6 flex items-center gap-3 z-10">
-            <div className="flex items-center gap-2" role="tablist" aria-label="Choose category">
-              {slides.map((s, i) => (
-                <button
-                  key={s.value}
-                  type="button"
-                  role="tab"
-                  aria-selected={i === index}
-                  aria-label={`Show ${s.label}`}
-                  onClick={() => goTo(i)}
-                  className={`h-1.5 rounded-full transition-all duration-200 ease-out motion-reduce:transition-none ${
-                    i === index ? "w-6 bg-white" : "w-1.5 bg-white/40 hover:bg-white/70"
-                  }`}
-                />
-              ))}
-            </div>
+          <>
             <button
               type="button"
-              onClick={() => setIsPlaying((p) => !p)}
-              aria-label={isPlaying ? "Pause carousel" : "Play carousel"}
-              className="w-7 h-7 rounded-full border border-white/40 text-white flex items-center justify-center hover:bg-white/10 transition-colors duration-150 text-xs"
+              onClick={() => goTo(index - 1)}
+              aria-label="Previous category"
+              className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/15 border border-white/40 text-white flex items-center justify-center hover:bg-white/25 transition-colors duration-150 text-lg"
             >
-              {isPlaying ? "❚❚" : "▶"}
+              ←
             </button>
-          </div>
+            <button
+              type="button"
+              onClick={() => goTo(index + 1)}
+              aria-label="Next category"
+              className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/15 border border-white/40 text-white flex items-center justify-center hover:bg-white/25 transition-colors duration-150 text-lg"
+            >
+              →
+            </button>
+
+            <div className="absolute bottom-6 left-6 flex items-center gap-3 z-10">
+              <div className="flex items-center gap-2" role="tablist" aria-label="Choose category">
+                {slides.map((s, i) => (
+                  <button
+                    key={s.value}
+                    type="button"
+                    role="tab"
+                    aria-selected={i === index}
+                    aria-label={`Show ${s.label}`}
+                    onClick={() => goTo(i)}
+                    className={`h-1.5 rounded-full transition-all duration-200 ease-out motion-reduce:transition-none ${
+                      i === index ? "w-6 bg-white" : "w-1.5 bg-white/40 hover:bg-white/70"
+                    }`}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsPlaying((p) => !p)}
+                aria-label={isPlaying ? "Pause carousel" : "Play carousel"}
+                className="w-7 h-7 rounded-full border border-white/40 text-white flex items-center justify-center hover:bg-white/10 transition-colors duration-150 text-xs"
+              >
+                {isPlaying ? "❚❚" : "▶"}
+              </button>
+            </div>
+          </>
         )}
       </div>
     </section>
