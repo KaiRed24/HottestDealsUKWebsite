@@ -76,10 +76,8 @@ export default function Footer({
       </div>
 
       <div className="border-t border-white/15">
-        <div className="mx-auto max-w-[1280px] px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/60">
+        <div className="mx-auto max-w-[1280px] px-6 py-5 text-xs text-white/60">
           <p>© {new Date().getFullYear()} Hottest Deals UK. All rights reserved.</p>
-          {/* TODO: add real company registration number once available — never invent one */}
-          <p>Company number: to be added</p>
         </div>
       </div>
     </footer>

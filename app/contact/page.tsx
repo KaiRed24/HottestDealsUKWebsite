@@ -23,11 +23,11 @@ export default function ContactPage() {
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
         <a
-          href="mailto:hello@hottestdealsuk.co.uk"
+          href="mailto:hottestdealsukwebsite@gmail.com"
           className="rounded-[var(--radius)] border border-grey-line bg-white p-6 hover:border-navy transition-colors duration-150"
         >
           <p className="text-lg font-semibold text-text">Email</p>
-          <p className="mt-1 font-medium text-blue">hello@hottestdealsuk.co.uk</p>
+          <p className="mt-1 font-medium text-blue">hottestdealsukwebsite@gmail.com</p>
         </a>
 
         <div className="rounded-[var(--radius)] border border-grey-line bg-white p-6 flex flex-col gap-3">

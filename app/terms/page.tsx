@@ -22,10 +22,10 @@ export default function TermsPage() {
           or Whatnot, so each platform&apos;s own terms apply to your order.
           Questions? Email{" "}
           <a
-            href="mailto:hello@hottestdealsuk.co.uk"
+            href="mailto:hottestdealsukwebsite@gmail.com"
             className="font-medium text-blue hover:text-navy transition-colors"
           >
-            hello@hottestdealsuk.co.uk
+            hottestdealsukwebsite@gmail.com
           </a>
           .
         </p>

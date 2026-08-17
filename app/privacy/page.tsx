@@ -57,10 +57,10 @@ export default function PrivacyPage() {
             deletion of any personal data we hold about you. To make a
             request, email{" "}
             <a
-              href="mailto:hello@hottestdealsuk.co.uk"
+              href="mailto:hottestdealsukwebsite@gmail.com"
               className="font-medium text-blue hover:text-navy transition-colors"
             >
-              hello@hottestdealsuk.co.uk
+              hottestdealsukwebsite@gmail.com
             </a>
             . If you&apos;re unhappy with how we&apos;ve handled your data,
             you can complain to the UK Information Commissioner&apos;s

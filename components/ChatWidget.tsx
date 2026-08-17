@@ -14,7 +14,7 @@ const GREETING: ChatMessage = {
 };
 
 const FALLBACK_MESSAGE =
-  "Our chat assistant isn't connected yet — email hello@hottestdealsuk.co.uk or find us on TikTok/Whatnot in the meantime.";
+  "Our chat assistant isn't connected yet — email hottestdealsukwebsite@gmail.com or find us on TikTok/Whatnot in the meantime.";
 
 function CandyIcon() {
   return (
