@@ -3,6 +3,8 @@ import { getProducts } from "@/lib/products";
 
 const BASE_URL = "https://hottestdealsuk.co.uk";
 
+export const revalidate = 3600;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const products = await getProducts();
 
