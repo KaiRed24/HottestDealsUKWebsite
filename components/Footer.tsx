@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SocialLink from "@/components/SocialLink";
+import ScrollStage from "@/components/motion/ScrollStage";
 
 export default function Footer({
   tiktokIconPath,
@@ -11,7 +12,14 @@ export default function Footer({
 }) {
   return (
     <footer className="bg-blue-deep">
-      <div className="mx-auto max-w-[1280px] px-6 py-20 grid gap-10 sm:grid-cols-4">
+      {/* The footer is the last stop in the scroll sequence — it only ever
+          needs to arrive (exit=false), never fade back out, since nothing
+          follows it and its links must always stay fully readable/clickable. */}
+      <ScrollStage
+        variant="fade-scale"
+        exit={false}
+        className="mx-auto max-w-[1280px] px-6 py-20 grid gap-10 sm:grid-cols-4"
+      >
         <div className="sm:col-span-2">
           <p className="text-xl font-semibold tracking-[-0.02em] text-white">
             Hottest Deals UK
@@ -73,7 +81,7 @@ export default function Footer({
             </li>
           </ul>
         </div>
-      </div>
+      </ScrollStage>
 
       <div className="border-t border-white/15">
         <div className="mx-auto max-w-[1280px] px-6 py-5 text-xs text-white/60">

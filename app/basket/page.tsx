@@ -1,11 +1,46 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/components/CartProvider";
 
+type CheckoutStatus = "idle" | "loading" | "unavailable" | "error";
+
 export default function BasketPage() {
-  const { items, subtotal, removeItem, setQuantity } = useCart();
+  const { items, subtotal, removeItem, setQuantity, clear } = useCart();
+  const [status, setStatus] = useState<CheckoutStatus>("idle");
+  const [unavailable, setUnavailable] = useState<string[]>([]);
+
+  async function handleCheckout() {
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((item) => ({ sku: item.sku, quantity: item.quantity })),
+        }),
+      });
+      const data = await res.json().catch(() => null);
+
+      if (res.status === 409) {
+        setUnavailable(data?.unavailable ?? []);
+        setStatus("unavailable");
+        return;
+      }
+
+      if (!res.ok || !data?.checkoutUrl) {
+        setStatus("error");
+        return;
+      }
+
+      clear();
+      window.location.href = data.checkoutUrl;
+    } catch {
+      setStatus("error");
+    }
+  }
 
   if (items.length === 0) {
     return (
@@ -92,15 +127,24 @@ export default function BasketPage() {
 
         <button
           type="button"
-          disabled
-          className="btn-primary mt-5 w-full opacity-50 cursor-not-allowed"
+          onClick={handleCheckout}
+          disabled={status === "loading"}
+          className="btn-primary mt-5 w-full disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Checkout — coming soon
+          {status === "loading" ? "Starting checkout…" : "Checkout"}
         </button>
-        <p className="mt-3 text-sm text-muted text-center">
-          On-site checkout isn&apos;t live yet. In the meantime, order via TikTok
-          Shop, eBay or Whatnot from each product&apos;s page.
-        </p>
+
+        {status === "unavailable" && (
+          <p className="mt-3 text-sm text-blue text-center">
+            {unavailable.join(", ")} {unavailable.length === 1 ? "isn't" : "aren't"} available
+            for on-site checkout yet — buy via TikTok or eBay from the product page instead.
+          </p>
+        )}
+        {status === "error" && (
+          <p className="mt-3 text-sm text-blue text-center">
+            Something went wrong starting checkout — please try again.
+          </p>
+        )}
       </div>
     </div>
   );

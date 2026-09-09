@@ -12,6 +12,7 @@ export type Product = {
   image_url: string | null;
   ebay_url: string | null;
   tiktok_url: string | null;
+  shopify_variant_id: string | null;
   is_featured: boolean;
   is_active: boolean;
   created_at: string;

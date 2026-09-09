@@ -41,6 +41,12 @@ yarn-error.log*
 # vercel
 .vercel
 
+# generated Shopify catalog-sync reference data — regenerate via scripts/, not source
+/shopify-final-mapping.sql
+/shopify-import-missing-products.csv
+/shopify-match-full-detail.txt
+/shopify-match-report.sql
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

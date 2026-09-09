@@ -6,7 +6,6 @@ import Nav from "@/components/Nav";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/components/CartProvider";
-import ChatWidget from "@/components/ChatWidget";
 import { hasLogo, getLogoVersion } from "@/lib/assets";
 import { getSocialIconPaths } from "@/lib/social-availability";
 import { createClient } from "@/lib/supabase/server";
@@ -83,7 +82,6 @@ export default async function RootLayout({
             tiktokIconPath={socialIcons.tiktok}
             whatnotIconPath={socialIcons.whatnot}
           />
-          <ChatWidget />
         </CartProvider>
       </body>
     </html>
