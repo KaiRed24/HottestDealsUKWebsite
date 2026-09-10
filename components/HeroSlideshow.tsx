@@ -66,7 +66,7 @@ export default function HeroSlideshow({ images }: { images: string[] }) {
 
   return (
     <div
-      className="absolute inset-0 overflow-hidden select-none"
+      className="relative w-full aspect-[16/9] md:aspect-auto md:absolute md:inset-0 overflow-hidden select-none"
       style={{ touchAction: "pan-y" }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -87,7 +87,7 @@ export default function HeroSlideshow({ images }: { images: string[] }) {
         }}
       >
         {images.map((src, i) => (
-          <div key={src} className="relative w-full h-full shrink-0">
+          <div key={src} className="relative w-full h-full shrink-0 bg-navy">
             <Image
               src={src}
               alt=""
@@ -95,7 +95,7 @@ export default function HeroSlideshow({ images }: { images: string[] }) {
               priority={i === 0}
               sizes="100vw"
               draggable={false}
-              className="object-cover pointer-events-none"
+              className="object-contain md:object-cover pointer-events-none"
             />
           </div>
         ))}

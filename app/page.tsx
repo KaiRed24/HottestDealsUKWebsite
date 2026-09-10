@@ -46,20 +46,26 @@ export default async function Home() {
           its own slower parallax scale while the text exits faster as the
           user scrolls into Top Brands (animateContainer off — this section
           is full-bleed and must never itself scale/gap at the edges). */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden bg-navy">
         <ScrollStage
           variant="hero"
           animateContainer={false}
           entrance={false}
           playOnMount
         >
-          <div data-anim="bg-parallax" className="absolute inset-0">
+          {/* Mobile: the source banners are landscape (~3:2–16:9) and don't
+              suit being cropped to fill a tall, text-driven box, so below
+              md the image gets its own contained band above the copy
+              instead of sitting full-bleed behind it. md: restores the
+              original full-bleed overlay exactly. */}
+          <div data-anim="bg-parallax" className="relative md:absolute md:inset-0">
             <HeroSlideshow images={heroBanners} />
           </div>
           {/* Navy overlay gradient — darkens the photo so clean white type
-              never needs a stroke or shadow to stay readable. */}
-          <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/55 to-navy/20 pointer-events-none" />
-          <div className="relative z-10 mx-auto max-w-[1280px] px-6 py-12 sm:py-32 flex flex-col items-start">
+              never needs a stroke or shadow to stay readable. Only needed
+              once the image sits full-bleed behind the text, at md:+. */}
+          <div className="hidden md:block md:absolute md:inset-0 bg-gradient-to-r from-navy/85 via-navy/55 to-navy/20 pointer-events-none" />
+          <div className="relative z-10 mx-auto max-w-[1280px] px-6 pt-8 pb-12 sm:py-32 flex flex-col items-start">
             <h1
               data-anim="heading"
               className="text-h1 md:text-display font-semibold leading-[1.1] tracking-[-0.03em] text-white max-w-2xl"
@@ -67,11 +73,11 @@ export default async function Home() {
               Imported candy, sodas &amp; sweets you can&apos;t find on the high
               street.
             </h1>
-            <p data-anim="subtitle" className="mt-4 md:mt-6 text-body leading-relaxed text-white/85 max-w-xl">
+            <p data-anim="subtitle" className="mt-2 md:mt-6 text-body leading-relaxed text-white/85 max-w-xl">
               American candy, Asian treats and European chocolate — shipped
               fast across the UK.
             </p>
-            <div data-anim="cta" className="mt-6 md:mt-10 flex flex-col sm:flex-row gap-3">
+            <div data-anim="cta" className="mt-4 md:mt-10 flex flex-col sm:flex-row gap-3">
               <Link href="/shop" className="btn-primary bg-white text-navy hover:bg-blue-tint px-8">
                 Shop now
               </Link>
@@ -84,7 +90,7 @@ export default async function Home() {
                 Follow @hottestdealsuk
               </a>
             </div>
-            <p data-anim="meta" className="mt-8 md:mt-12 text-small text-white/60">
+            <p data-anim="meta" className="mt-6 md:mt-12 text-small text-white/60">
               Fast UK delivery &nbsp;·&nbsp; 36,000+ TikTok followers &nbsp;·&nbsp; Genuine imported stock
             </p>
           </div>
