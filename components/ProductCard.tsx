@@ -40,7 +40,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
       </Link>
 
-      <div className="mt-auto p-4 pt-3 flex items-center justify-between gap-2">
+      <div className="mt-auto p-4 pt-3 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <span
           className="font-display font-bold text-ink"
           style={{ fontSize: "var(--text-price)", fontVariantNumeric: "tabular-nums" }}
@@ -49,7 +49,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </span>
         <AddToBasketButton
           product={product}
-          className="!px-4 !py-2 !min-h-9 text-sm shrink-0"
+          className="w-full !px-3 !py-2.5 !min-h-11 text-xs md:w-auto md:!px-4 md:!py-2 md:!min-h-9 md:text-sm md:shrink-0"
         />
       </div>
     </div>

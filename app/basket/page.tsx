@@ -62,7 +62,7 @@ export default function BasketPage() {
         {items.map((item) => (
           <div
             key={item.sku}
-            className="flex items-center gap-4 rounded-[var(--radius)] border border-grey-line bg-white p-4"
+            className="flex flex-wrap items-center gap-x-4 gap-y-3 rounded-[var(--radius)] border border-grey-line bg-white p-4 md:flex-nowrap"
           >
             <div className="relative w-20 h-20 shrink-0 bg-blue-tint rounded-[var(--radius)] overflow-hidden">
               {item.image_url && (
@@ -76,43 +76,45 @@ export default function BasketPage() {
               )}
             </div>
 
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-[140px] md:min-w-0">
               <p className="font-medium text-text leading-snug line-clamp-2">
                 {item.name}
               </p>
               <p className="mt-1 font-semibold text-navy">£{item.price.toFixed(2)}</p>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between gap-2 w-full md:w-auto md:justify-start md:gap-6">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setQuantity(item.sku, item.quantity - 1)}
+                  aria-label={`Decrease quantity of ${item.name}`}
+                  className="w-11 h-11 md:w-9 md:h-9 rounded-[var(--radius)] border border-grey-line flex items-center justify-center hover:border-navy transition-colors duration-150"
+                >
+                  −
+                </button>
+                <span className="w-6 text-center font-medium tabular-nums">
+                  {item.quantity}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setQuantity(item.sku, item.quantity + 1)}
+                  aria-label={`Increase quantity of ${item.name}`}
+                  className="w-11 h-11 md:w-9 md:h-9 rounded-[var(--radius)] border border-grey-line flex items-center justify-center hover:border-navy transition-colors duration-150"
+                >
+                  +
+                </button>
+              </div>
+
               <button
                 type="button"
-                onClick={() => setQuantity(item.sku, item.quantity - 1)}
-                aria-label={`Decrease quantity of ${item.name}`}
-                className="w-9 h-9 rounded-[var(--radius)] border border-grey-line flex items-center justify-center hover:border-navy transition-colors duration-150"
+                onClick={() => removeItem(item.sku)}
+                aria-label={`Remove ${item.name} from basket`}
+                className="text-sm text-muted hover:text-blue transition-colors"
               >
-                −
-              </button>
-              <span className="w-6 text-center font-medium tabular-nums">
-                {item.quantity}
-              </span>
-              <button
-                type="button"
-                onClick={() => setQuantity(item.sku, item.quantity + 1)}
-                aria-label={`Increase quantity of ${item.name}`}
-                className="w-9 h-9 rounded-[var(--radius)] border border-grey-line flex items-center justify-center hover:border-navy transition-colors duration-150"
-              >
-                +
+                Remove
               </button>
             </div>
-
-            <button
-              type="button"
-              onClick={() => removeItem(item.sku)}
-              aria-label={`Remove ${item.name} from basket`}
-              className="ml-2 text-sm text-muted hover:text-blue transition-colors"
-            >
-              Remove
-            </button>
           </div>
         ))}
       </div>

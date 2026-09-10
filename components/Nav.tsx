@@ -104,31 +104,31 @@ export default function Nav({
 
         <div className="lg:hidden flex items-center gap-1">
           <BasketLink />
-        </div>
 
-        <button
-          type="button"
-          className="lg:hidden flex flex-col items-center justify-center gap-1.5 w-11 h-11 -mr-2"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span
-            className={`block h-0.5 w-6 bg-white transition-transform motion-reduce:transition-none ${
-              open ? "translate-y-2 rotate-45" : ""
-            }`}
-          />
-          <span
-            className={`block h-0.5 w-6 bg-white transition-opacity motion-reduce:transition-none ${
-              open ? "opacity-0" : ""
-            }`}
-          />
-          <span
-            className={`block h-0.5 w-6 bg-white transition-transform motion-reduce:transition-none ${
-              open ? "-translate-y-2 -rotate-45" : ""
-            }`}
-          />
-        </button>
+          <button
+            type="button"
+            className="lg:hidden flex flex-col items-center justify-center gap-1.5 w-11 h-11 -mr-2"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span
+              className={`block h-0.5 w-6 bg-white transition-transform motion-reduce:transition-none ${
+                open ? "translate-y-2 rotate-45" : ""
+              }`}
+            />
+            <span
+              className={`block h-0.5 w-6 bg-white transition-opacity motion-reduce:transition-none ${
+                open ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`block h-0.5 w-6 bg-white transition-transform motion-reduce:transition-none ${
+                open ? "-translate-y-2 -rotate-45" : ""
+              }`}
+            />
+          </button>
+        </div>
       </div>
 
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
