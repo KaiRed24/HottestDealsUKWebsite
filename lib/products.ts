@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import { storageImageUrl } from "@/lib/product-image";
 
 export type Product = {
   id: string;
@@ -21,10 +22,7 @@ export type Product = {
 
 function withResolvedImage(product: Product): Product {
   if (product.image_url) return product;
-  return {
-    ...product,
-    image_url: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/product-images/${product.sku}.jpg`,
-  };
+  return { ...product, image_url: storageImageUrl(product.sku) };
 }
 
 export async function getProducts(filters: {

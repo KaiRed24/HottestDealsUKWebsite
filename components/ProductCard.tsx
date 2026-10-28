@@ -24,7 +24,7 @@ export default function ProductCard({ product }: { product: Product }) {
     >
       <Link href={`/product/${product.sku}`} className="contents">
         <div className="relative overflow-hidden">
-          <ProductImageFrame src={product.image_url as string} alt={product.name} />
+          <ProductImageFrame src={product.image_url} alt={product.name} />
           {soldOut || product.stock_quantity <= 5 ? (
             <div className="absolute top-3 left-3">
               <StockBadge stock={product.stock_quantity} />
@@ -32,15 +32,15 @@ export default function ProductCard({ product }: { product: Product }) {
           ) : null}
         </div>
 
-        <div className="flex flex-1 flex-col p-4 pb-0">
+        <div className="flex flex-1 flex-col p-3 pb-0 sm:p-4 sm:pb-0">
           {origin && <span className="origin-stamp w-fit">{origin}</span>}
-          <p className="mt-2 text-[0.9375rem] font-medium leading-snug text-text min-h-[2.6em] line-clamp-2">
+          <p className="mt-2 text-[0.9375rem] font-medium leading-snug text-text h-[2.75em] line-clamp-2">
             {product.name}
           </p>
         </div>
       </Link>
 
-      <div className="mt-auto p-4 pt-3 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <div className="mt-auto p-3 pt-2 sm:p-4 sm:pt-3 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <span
           className="font-display font-bold text-ink"
           style={{ fontSize: "var(--text-price)", fontVariantNumeric: "tabular-nums" }}
@@ -49,7 +49,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </span>
         <AddToBasketButton
           product={product}
-          className="w-full !px-3 !py-2.5 !min-h-11 text-xs md:w-auto md:!px-4 md:!py-2 md:!min-h-9 md:text-sm md:shrink-0"
+          className="w-full !px-3 !py-2.5 !min-h-11 text-sm md:w-auto md:!px-4 md:!py-2 md:!min-h-9 md:text-sm md:shrink-0"
         />
       </div>
     </div>

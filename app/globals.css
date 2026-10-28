@@ -13,6 +13,7 @@
   --surface: #ffffff; /* white — ONLY for cards on top of a blue background */
   --line: #dce3ef;
   --muted: #5a6b85;
+  --success: #15803d; /* "Added ✓" confirmation — reads at a glance on blue */
 
   /* Legacy names kept so every existing component (bg-navy, text-blue,
      bg-blue-tint, ...) automatically inherits the new palette without a
@@ -121,6 +122,6 @@ h3 {
   /* The "customs stamp" signature element — origin tags on product cards
      and the product detail page. Small, mono, blue-outlined. */
   .origin-stamp {
-    @apply inline-flex items-center font-mono text-[0.625rem] uppercase tracking-[0.08em] text-blue border border-blue/15 rounded-[2px] px-1.5 py-0.5;
+    @apply inline-flex items-center font-mono text-xs uppercase tracking-[0.08em] text-blue border border-blue/25 rounded-[2px] px-1.5 py-0.5;
   }
 }

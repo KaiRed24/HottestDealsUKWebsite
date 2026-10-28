@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { storageImageUrl } from "@/lib/product-image";
 
 export type CartItem = {
   sku: string;
@@ -31,7 +32,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) setItems(JSON.parse(raw));
+      // Items saved before their product had a photo have image_url: null —
+      // give them the same storage fallback the server uses.
+      if (raw) {
+        const saved: CartItem[] = JSON.parse(raw);
+        setItems(saved.map((i) => ({ ...i, image_url: i.image_url || storageImageUrl(i.sku) })));
+      }
     } catch {
       // Corrupt or inaccessible storage — start with an empty basket.
     }

@@ -25,7 +25,7 @@ export default async function ShopPage({
   const products = await getProducts();
 
   return (
-    <div className="mx-auto w-full max-w-[1280px] px-6 py-16">
+    <div className="mx-auto w-full max-w-[1280px] px-6 pt-8 pb-14 sm:py-16">
       <h1 className="text-h2 sm:text-display font-semibold tracking-[-0.02em] text-text">
         Shop all products
       </h1>
@@ -33,7 +33,7 @@ export default async function ShopPage({
         {products.length} imported treats, ready to ship.
       </p>
 
-      <div className="mt-6">
+      <div className="mt-5 sm:mt-6">
         <ShopBrowser
           products={products}
           initialCategory={category ?? "all"}

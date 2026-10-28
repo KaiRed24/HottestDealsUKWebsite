@@ -18,7 +18,7 @@ export default function Footer({
       <ScrollStage
         variant="fade-scale"
         exit={false}
-        className="mx-auto max-w-[1280px] px-6 py-20 grid gap-10 sm:grid-cols-4"
+        className="mx-auto max-w-[1280px] px-6 py-14 sm:py-20 grid gap-8 sm:gap-10 sm:grid-cols-4"
       >
         <div className="sm:col-span-2">
           <p className="text-xl font-semibold tracking-[-0.02em] text-white">
@@ -36,20 +36,20 @@ export default function Footer({
         </div>
 
         <div>
-          <p className="font-medium text-white mb-3 text-sm">Shop</p>
-          <ul className="space-y-2 text-sm text-white/70">
+          <p className="font-medium text-white mb-1 text-sm">Shop</p>
+          <ul className="text-sm text-white/80">
             <li>
-              <Link href="/shop" className="hover:text-white transition-colors">
+              <Link href="/shop" className="inline-flex items-center min-h-11 hover:text-white transition-colors">
                 Shop all
               </Link>
             </li>
             <li>
-              <Link href="/about" className="hover:text-white transition-colors">
+              <Link href="/about" className="inline-flex items-center min-h-11 hover:text-white transition-colors">
                 About us
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="hover:text-white transition-colors">
+              <Link href="/contact" className="inline-flex items-center min-h-11 hover:text-white transition-colors">
                 Contact
               </Link>
             </li>
@@ -57,25 +57,25 @@ export default function Footer({
         </div>
 
         <div>
-          <p className="font-medium text-white mb-3 text-sm">Policies</p>
-          <ul className="space-y-2 text-sm text-white/70">
+          <p className="font-medium text-white mb-1 text-sm">Policies</p>
+          <ul className="text-sm text-white/80">
             <li>
-              <Link href="/terms" className="hover:text-white transition-colors">
+              <Link href="/terms" className="inline-flex items-center min-h-11 hover:text-white transition-colors">
                 Terms of service
               </Link>
             </li>
             <li>
-              <Link href="/refunds" className="hover:text-white transition-colors">
+              <Link href="/refunds" className="inline-flex items-center min-h-11 hover:text-white transition-colors">
                 Refund policy
               </Link>
             </li>
             <li>
-              <Link href="/shipping" className="hover:text-white transition-colors">
+              <Link href="/shipping" className="inline-flex items-center min-h-11 hover:text-white transition-colors">
                 Shipping policy
               </Link>
             </li>
             <li>
-              <Link href="/privacy" className="hover:text-white transition-colors">
+              <Link href="/privacy" className="inline-flex items-center min-h-11 hover:text-white transition-colors">
                 Privacy policy
               </Link>
             </li>
@@ -84,7 +84,7 @@ export default function Footer({
       </ScrollStage>
 
       <div className="border-t border-white/15">
-        <div className="mx-auto max-w-[1280px] px-6 py-5 text-xs text-white/60">
+        <div className="mx-auto max-w-[1280px] px-6 py-5 text-sm text-white/70">
           <p>© {new Date().getFullYear()} Hottest Deals UK. All rights reserved.</p>
         </div>
       </div>

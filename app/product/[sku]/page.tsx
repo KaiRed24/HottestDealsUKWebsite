@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import ProductImage from "@/components/ProductImage";
 import { getProduct } from "@/lib/products";
 import StockBadge from "@/components/StockBadge";
 import AddToBasketButton from "@/components/AddToBasketButton";
@@ -47,10 +47,9 @@ export default async function ProductPage({
   return (
     <div className="mx-auto w-full max-w-4xl px-6 py-16 grid gap-10 sm:grid-cols-2 sm:items-start">
       <div className="relative aspect-square rounded-[var(--radius)] overflow-hidden border border-grey-line bg-blue-tint p-6">
-        <Image
-          src={product.image_url as string}
+        <ProductImage
+          src={product.image_url}
           alt={product.name}
-          fill
           sizes="(max-width: 640px) 100vw, 50vw"
           className="object-contain p-6"
           priority

@@ -112,7 +112,10 @@ export default function ScrollStage({
               tl.to(
                 el,
                 {
-                  opacity: conditions.mobile ? 0.55 : 0.3,
+                  // No fade on phones: a section is often still the main
+                  // thing on a small screen as it scrolls up, and a dimmed
+                  // one just reads as washed out / low contrast.
+                  opacity: conditions.mobile ? 1 : 0.3,
                   y: -y * 0.6,
                   scale: 1 - (1 - scaleFrom) * 0.6,
                   ease: "power1.in",
@@ -154,7 +157,7 @@ export default function ScrollStage({
                   onComplete: () => {
                     if (!exit || animateContainer) return;
                     gsap.to(headings, {
-                      opacity: conditions.mobile ? 0.6 : 0.28,
+                      opacity: conditions.mobile ? 1 : 0.28,
                       y: -y * 1.2,
                       scale: conditions.mobile ? 1 : 0.97,
                       ease: "power1.in",

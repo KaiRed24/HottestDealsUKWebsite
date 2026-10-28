@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
 import CategoryChips from "@/components/CategoryChips";
+import FilterSheet from "@/app/shop/FilterSheet";
 import type { Product } from "@/lib/products";
 
 const categoryOptions = [
@@ -140,6 +141,35 @@ export default function ShopBrowser({
     return sorted;
   }, [products, category, region, priceBucket, search, sort]);
 
+  const [sheet, setSheet] = useState<"filters" | "sort" | null>(null);
+
+  const activeFilters = [
+    { key: "category", value: category, options: categoryOptions },
+    { key: "region", value: region, options: regionOptions },
+    { key: "price", value: priceBucket, options: priceOptions },
+  ]
+    .filter((f) => f.value !== "all")
+    .map((f) => ({
+      key: f.key as "category" | "region" | "price",
+      label: f.options.find((o) => o.value === f.value)?.label ?? f.value,
+    }));
+
+  function applyFilters(next: { category: string; region: string; price: string }) {
+    setCategory(next.category);
+    setRegion(next.region);
+    setPriceBucket(next.price);
+    syncUrl(next);
+  }
+
+  function removeFilter(key: "category" | "region" | "price") {
+    if (key === "category") setCategory("all");
+    if (key === "region") setRegion("all");
+    if (key === "price") setPriceBucket("all");
+    syncUrl({ [key]: "all" });
+  }
+
+  const sortLabel = sortOptions.find((o) => o.value === sort)?.label ?? "Best selling";
+
   return (
     <div className="flex flex-col gap-4">
       <input
@@ -151,9 +181,83 @@ export default function ShopBrowser({
         }}
         placeholder="Search for candy, soda, chocolate..."
         aria-label="Search products"
-        className="w-full rounded-[var(--radius)] border border-grey-line bg-white px-4 py-3 text-sm text-text focus:outline-none focus:border-navy"
+        className="w-full rounded-[var(--radius)] border border-grey-line bg-white px-4 py-3 min-h-11 text-base sm:text-sm text-text focus:outline-none focus:border-navy"
       />
 
+      {/* Mobile: one sticky Filters / Sort bar + a bottom sheet, instead of
+          three rows of chips squashed across a phone screen. */}
+      <div className="md:hidden sticky top-24 z-30 -mx-6 px-6 py-2 bg-blue-pale/95 backdrop-blur-sm border-b border-ink/10">
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => setSheet("filters")}
+            className="flex-1 inline-flex items-center justify-center gap-2 min-h-11 rounded-[var(--radius)] border border-ink/20 bg-white text-sm font-semibold text-ink"
+          >
+            <FilterIcon />
+            Filters
+            {activeFilters.length > 0 && (
+              <span className="min-w-5 h-5 px-1.5 rounded-full bg-navy text-white text-xs flex items-center justify-center">
+                {activeFilters.length}
+              </span>
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={() => setSheet("sort")}
+            className="flex-1 inline-flex items-center justify-center gap-2 min-h-11 rounded-[var(--radius)] border border-ink/20 bg-white text-sm font-semibold text-ink"
+          >
+            <SortIcon />
+            <span className="truncate">Sort: {sortLabel}</span>
+          </button>
+        </div>
+        {activeFilters.length > 0 && (
+          <ul className="mt-2 flex flex-wrap gap-2" aria-label="Active filters">
+            {activeFilters.map((f) => (
+              <li key={f.key}>
+                <button
+                  type="button"
+                  onClick={() => removeFilter(f.key)}
+                  aria-label={`Remove filter ${f.label}`}
+                  className="inline-flex items-center gap-1.5 min-h-9 rounded-full bg-navy pl-3 pr-2 text-sm font-medium text-white"
+                >
+                  {f.label}
+                  <span aria-hidden className="text-base leading-none">×</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <FilterSheet
+        open={sheet === "filters"}
+        mode="filters"
+        onClose={() => setSheet(null)}
+        groups={[
+          { key: "category", title: "Category", options: categoryOptions },
+          { key: "region", title: "Region", options: regionOptions },
+          { key: "price", title: "Price", options: priceOptions },
+        ]}
+        values={{ category, region, price: priceBucket }}
+        onApply={(v) => {
+          applyFilters({ category: v.category, region: v.region, price: v.price });
+          setSheet(null);
+        }}
+      />
+      <FilterSheet
+        open={sheet === "sort"}
+        mode="sort"
+        onClose={() => setSheet(null)}
+        groups={[{ key: "sort", title: "Sort by", options: sortOptions }]}
+        values={{ sort }}
+        onApply={(v) => {
+          setSort(v.sort);
+          syncUrl({ sort: v.sort });
+          setSheet(null);
+        }}
+      />
+
+      <div className="hidden md:flex flex-col gap-4">
       <CategoryChips
         options={categoryOptions}
         selected={category}
@@ -179,11 +283,13 @@ export default function ShopBrowser({
         }}
       />
 
-      <div className="flex items-center justify-between gap-3 pt-1">
+      </div>
+
+      <div className="flex items-center justify-between gap-3 md:pt-1">
         <p className="text-sm text-muted">
           {filtered.length} {filtered.length === 1 ? "product" : "products"}
         </p>
-        <label className="flex items-center gap-2 text-sm">
+        <label className="hidden md:flex items-center gap-2 text-sm">
           <span className="text-muted">Sort</span>
           <select
             value={sort}
@@ -191,7 +297,7 @@ export default function ShopBrowser({
               setSort(e.target.value);
               syncUrl({ sort: e.target.value });
             }}
-            className="rounded-[var(--radius)] border border-grey-line bg-white px-3 py-2 text-text font-medium focus:outline-none focus:border-navy"
+            className="rounded-[var(--radius)] border border-grey-line bg-white px-3 py-2 min-h-11 text-text font-medium focus:outline-none focus:border-navy"
           >
             {sortOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -219,5 +325,21 @@ export default function ShopBrowser({
         </div>
       )}
     </div>
+  );
+}
+
+function FilterIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+      <path d="M4 6h16M7 12h10M10 18h4" />
+    </svg>
+  );
+}
+
+function SortIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0" aria-hidden>
+      <path d="M7 4v16M3 16l4 4 4-4M17 20V4M13 8l4-4 4 4" />
+    </svg>
   );
 }

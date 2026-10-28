@@ -13,6 +13,43 @@ import ScrollStage from "@/components/motion/ScrollStage";
 
 export const revalidate = 60;
 
+const trustBadges = [
+  { icon: "truck", label: "Fast UK delivery" },
+  { icon: "users", label: "36,000+ TikTok followers" },
+  { icon: "check", label: "Genuine imported stock" },
+] as const;
+
+function TrustIcon({ name }: { name: (typeof trustBadges)[number]["icon"] }) {
+  const paths = {
+    truck: (
+      <>
+        <path d="M3 6h11v10H3z" />
+        <path d="M14 10h4l3 3v3h-7" />
+        <circle cx="7" cy="17.5" r="1.5" />
+        <circle cx="17" cy="17.5" r="1.5" />
+      </>
+    ),
+    users: (
+      <>
+        <circle cx="9" cy="8" r="3.5" />
+        <path d="M2.5 20a6.5 6.5 0 0 1 13 0" />
+        <path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5" />
+      </>
+    ),
+    check: (
+      <>
+        <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" />
+        <path d="m9 12 2 2 4-4" />
+      </>
+    ),
+  };
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0" aria-hidden>
+      {paths[name]}
+    </svg>
+  );
+}
+
 // The Featured Picks carousel — only shown once its image is uploaded to
 // public/category-carousel/<value>.jpg, so a half-configured slide never
 // goes live with a broken image.
@@ -65,7 +102,25 @@ export default async function Home() {
               never needs a stroke or shadow to stay readable. Only needed
               once the image sits full-bleed behind the text, at md:+. */}
           <div className="hidden md:block md:absolute md:inset-0 bg-gradient-to-r from-navy/85 via-navy/55 to-navy/20 pointer-events-none" />
-          <div className="relative z-10 mx-auto max-w-[1280px] px-6 pt-8 pb-12 sm:py-32 flex flex-col items-start">
+          <div className="relative z-10 mx-auto max-w-[1280px] px-6 pt-4 pb-10 sm:py-32 flex flex-col items-start">
+            {/* Trust badges: first thing under the banner on phones so they
+                sit above the fold (not behind the browser's bottom bar);
+                back below the CTAs from md:. */}
+            <ul
+              data-anim="meta"
+              aria-label="Why shop with us"
+              className="order-first md:order-last mb-5 md:mb-0 md:mt-12 flex flex-wrap gap-2"
+            >
+              {trustBadges.map((badge) => (
+                <li
+                  key={badge.label}
+                  className="flex items-center gap-1.5 rounded-full bg-white/15 border border-white/25 px-3 py-1.5 text-sm font-medium text-white"
+                >
+                  <TrustIcon name={badge.icon} />
+                  {badge.label}
+                </li>
+              ))}
+            </ul>
             <h1
               data-anim="heading"
               className="text-h1 md:text-display font-semibold leading-[1.1] tracking-[-0.03em] text-white max-w-2xl"
@@ -90,9 +145,6 @@ export default async function Home() {
                 Follow @hottestdealsuk
               </a>
             </div>
-            <p data-anim="meta" className="mt-6 md:mt-12 text-small text-white/60">
-              Fast UK delivery &nbsp;·&nbsp; 36,000+ TikTok followers &nbsp;·&nbsp; Genuine imported stock
-            </p>
           </div>
         </ScrollStage>
       </section>
@@ -100,18 +152,18 @@ export default async function Home() {
       {/* Top brands — Hero → Top Brands reads as a morph/fade, the softest
           of the transitions since it follows straight on from the hero. */}
       {topBrands.length > 0 && (
-        <section className="w-full bg-blue-pale px-6 py-24 sm:py-32">
+        <section className="w-full bg-blue-pale px-6 py-14 sm:py-32">
           <ScrollStage variant="morph" className="mx-auto max-w-[1280px]">
-            <div className="flex items-end justify-between mb-10">
-              <h2 data-anim="heading" className="text-h2 font-semibold tracking-[-0.02em] text-text">
+            <div className="flex items-end justify-between gap-4 mb-6 sm:mb-10">
+              <h2 data-anim="heading" className="text-h2 font-semibold tracking-[-0.02em] text-ink">
                 Shop top brands
               </h2>
               <Link
                 href="/shop"
                 data-anim="cta"
-                className="text-sm text-blue hover:text-navy transition-colors"
+                className="shrink-0 inline-flex items-center h-11 text-sm font-semibold text-ink underline decoration-2 underline-offset-4 decoration-ink/30 hover:decoration-ink transition-colors"
               >
-                Shop all
+                Shop all →
               </Link>
             </div>
             <TopBrands brands={topBrands} />
@@ -120,9 +172,9 @@ export default async function Home() {
       )}
 
       {/* Featured picks — full-bleed category carousel, matching the Hero's
-          treatment. Waiting on real photos, see chat for upload status.
-          Top Brands → here is a push: the whole panel arrives from below. */}
-      <ScrollStage variant="push">
+          treatment. animateContainer off for the same reason as the Hero:
+          scaling a full-bleed panel opens gaps at the screen edges. */}
+      <ScrollStage variant="push" animateContainer={false}>
         <CategoryCarousel slides={categorySlides} />
       </ScrollStage>
 
@@ -132,8 +184,8 @@ export default async function Home() {
           → here is a fade+scale, calmer than the push before it. */}
       {bundles.length > 0 && (
         <section className="bg-blue-deep">
-          <ScrollStage variant="fade-scale" className="mx-auto w-full max-w-[1280px] px-6 py-24 sm:py-32">
-            <div className="flex items-end justify-between mb-10">
+          <ScrollStage variant="fade-scale" className="mx-auto w-full max-w-[1280px] px-6 py-14 sm:py-32">
+            <div className="flex items-end justify-between gap-4 mb-6 sm:mb-10">
               <div>
                 <h2 data-anim="heading" className="text-h2 font-semibold tracking-[-0.02em] text-white">
                   Bundles &amp; mystery boxes
@@ -145,9 +197,9 @@ export default async function Home() {
               <Link
                 href="/shop?category=bundles"
                 data-anim="cta"
-                className="text-sm text-white hover:text-white/80 transition-colors shrink-0"
+                className="shrink-0 inline-flex items-center h-11 text-sm font-semibold text-white underline decoration-2 underline-offset-4 decoration-white/40 hover:decoration-white transition-colors"
               >
-                Shop all
+                Shop all →
               </Link>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -168,7 +220,7 @@ export default async function Home() {
       <section className="bg-blue-pale">
         <ScrollStage
           variant="slide-stagger"
-          className="mx-auto w-full max-w-[1280px] px-6 py-24 sm:py-32 text-center"
+          className="mx-auto w-full max-w-[1280px] px-6 py-14 sm:py-32 text-center"
         >
           <h2 data-anim="heading" className="text-h2 font-semibold tracking-[-0.02em] text-ink">
             36,000+ people follow us for restocks and drops

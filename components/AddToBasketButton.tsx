@@ -24,7 +24,7 @@ export default function AddToBasketButton({
       image_url: product.image_url,
     });
     setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
+    setTimeout(() => setAdded(false), 2000);
   }
 
   return (
@@ -33,10 +33,12 @@ export default function AddToBasketButton({
       onClick={handleClick}
       disabled={soldOut}
       className={`rounded-[var(--radius-sm)] font-medium px-6 py-3.5 min-h-11 transition-colors duration-150 ease-out disabled:opacity-50 disabled:cursor-not-allowed ${
-        added ? "bg-paper text-blue border border-blue" : "bg-blue text-white hover:bg-[var(--blue-ink)]"
+        added ? "bg-[var(--success)] text-white" : "bg-blue text-white hover:bg-[var(--blue-ink)]"
       } ${className}`}
     >
-      {soldOut ? "Sold out" : added ? "Added ✓" : "Add to basket"}
+      <span aria-live="polite">
+        {soldOut ? "Sold out" : added ? "Added ✓" : "Add to basket"}
+      </span>
     </button>
   );
 }

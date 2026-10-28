@@ -1,9 +1,17 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { CHECKOUT_DOMAIN, isShopifyCheckoutPath } from "@/lib/checkout";
 
 // Keeps the Supabase auth session cookie fresh on every request so server
 // components see an up-to-date logged-in/out state.
 export async function proxy(request: NextRequest) {
+  // A stale Shopify checkout link on the storefront domain (/cart/c/...,
+  // /checkouts/...) would otherwise 404 — send it on to Shopify intact.
+  const { pathname, search } = request.nextUrl;
+  if (isShopifyCheckoutPath(pathname)) {
+    return NextResponse.redirect(`https://${CHECKOUT_DOMAIN}${pathname}${search}`, 307);
+  }
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(

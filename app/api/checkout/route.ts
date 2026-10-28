@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getProduct } from "@/lib/products";
+import { normaliseCheckoutUrl } from "@/lib/checkout";
 
 export const runtime = "nodejs";
 
@@ -63,7 +64,8 @@ export async function POST(request: Request) {
 
   const data = await shopifyRes.json().catch(() => null);
   const userErrors = data?.data?.cartCreate?.userErrors;
-  const checkoutUrl = data?.data?.cartCreate?.cart?.checkoutUrl;
+  const rawCheckoutUrl = data?.data?.cartCreate?.cart?.checkoutUrl;
+  const checkoutUrl = rawCheckoutUrl ? normaliseCheckoutUrl(rawCheckoutUrl) : null;
 
   if (!shopifyRes.ok || userErrors?.length || !checkoutUrl) {
     console.error("Shopify cartCreate error:", userErrors ?? data);
