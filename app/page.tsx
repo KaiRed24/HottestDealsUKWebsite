@@ -102,7 +102,10 @@ export default async function Home() {
               never needs a stroke or shadow to stay readable. Only needed
               once the image sits full-bleed behind the text, at md:+. */}
           <div className="hidden md:block md:absolute md:inset-0 bg-gradient-to-r from-navy/85 via-navy/55 to-navy/20 pointer-events-none" />
-          <div className="relative z-10 mx-auto max-w-[1280px] px-6 pt-4 pb-10 sm:py-32 flex flex-col items-start">
+          {/* md:pointer-events-none: at md:+ this copy sits over the slideshow,
+              so hover-to-pause and drag-to-swipe need to reach it; the CTAs
+              opt back in below. */}
+          <div className="relative z-10 mx-auto max-w-[1280px] px-6 pt-4 pb-10 sm:py-32 flex flex-col items-start md:pointer-events-none">
             {/* Trust badges: first thing under the banner on phones so they
                 sit above the fold (not behind the browser's bottom bar);
                 back below the CTAs from md:. */}
@@ -132,7 +135,7 @@ export default async function Home() {
               American candy, Asian treats and European chocolate — shipped
               fast across the UK.
             </p>
-            <div data-anim="cta" className="mt-4 md:mt-10 flex flex-col sm:flex-row gap-3">
+            <div data-anim="cta" className="mt-4 md:mt-10 flex flex-col sm:flex-row gap-3 md:pointer-events-auto">
               <Link href="/shop" className="btn-primary bg-white text-navy hover:bg-blue-tint px-8">
                 Shop now
               </Link>
