@@ -15,7 +15,7 @@ export const revalidate = 60;
 
 const trustBadges = [
   { icon: "truck", label: "Fast UK delivery" },
-  { icon: "users", label: "36,000+ TikTok followers" },
+  { icon: "users", label: "60,000+ TikTok followers" },
   { icon: "check", label: "Genuine imported stock" },
 ] as const;
 
@@ -223,7 +223,7 @@ export default async function Home() {
           className="mx-auto w-full max-w-[1280px] px-6 py-14 sm:py-32 text-center"
         >
           <h2 data-anim="heading" className="text-h2 font-semibold tracking-[-0.02em] text-ink">
-            36,000+ people follow us for restocks and drops
+            60,000+ people follow us for restocks and drops
           </h2>
           <p data-anim="subtitle" className="mt-3 text-muted">
             TikTok for unboxings and new arrivals. Whatnot for live auctions

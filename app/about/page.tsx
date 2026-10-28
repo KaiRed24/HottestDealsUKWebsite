@@ -37,7 +37,7 @@ export default function AboutPage() {
           >
             @hottestdealsuk
           </a>{" "}
-          has grown to over 36,000 followers. We also sell live on Whatnot,
+          has grown to over 60,000 followers. We also sell live on Whatnot,
           and now here on our own website.
         </p>
         <p>
